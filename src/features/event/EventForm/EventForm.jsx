@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Segment, Form, Button } from 'semantic-ui-react';
 
 class EventForm extends Component {
   render() {
