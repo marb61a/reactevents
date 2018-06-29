@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Menu, Container, Button } from 'semantic-ui-react';
 import { NavLink, Link } from 'react-router-dom';
 
+import SignedOutMenu from '../Menus/SignedOutMenu';
+
 class NavBar extends Component {
   render() {
     return (
@@ -23,10 +25,7 @@ class NavBar extends Component {
               content="Create Event" 
             />
           </Menu.Item>
-          <Menu.Item position="right">
-            <Button basic inverted content="Login" />
-            <Button basic inverted content="Sign Out" style={{marginLeft: '0.5em'}} />
-          </Menu.Item>
+          <SignedOutMenu />
         </Container>
       </Menu>
     );
