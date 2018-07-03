@@ -36,15 +36,10 @@ class EventDashboard extends Component {
     })
   }
 
-  handleUpdateEvent = (updatedEvent) => {
+  handleUpdateEvent = updatedEvent => {
+    this.props.updateEvent(updatedEvent);
+
     this.setState({
-      events: this.state.events.map((event) => {
-        if(event.id === updatedEvent.id){
-          return Object.assign({}, updatedEvent);
-        } else {
-          return event;
-        }
-      }),
       isOpen: false,
       selectedEvent: null
     })
@@ -60,9 +55,9 @@ class EventDashboard extends Component {
   handleCreateEvent = (newEvent) => {
     newEvent.id = cuid();
     newEvent.hostPhotoURL = '/assets/user.png';
-    const updatedEvents = [...this.state.events, newEvent];
+    this.props.createEvent(newEvent);
+
     this.setState({
-      events: updatedEvents,
       isOpen: false
     })
   }
