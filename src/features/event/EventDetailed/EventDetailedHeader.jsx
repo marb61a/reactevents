@@ -14,12 +14,12 @@ const eventImageTextStyle = {
     color: 'white'
 };
 
-const EventDetailedHeader = () => {
+const EventDetailedHeader = ({event}) => {
     return (
       <Segment.Group>
         <Segment basic attached="top" style={{ padding: '0' }}>
           <Image 
-            src="/assets/categoryImages/drinks.jpg" 
+            src={`/assets/categoryImages/drinks.jpg`}
             fluid 
             style={eventImageStyle} 
           />
