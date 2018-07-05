@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
+import { Segment, Form, Button, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
+import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import cuid from 'cuid';
  
 import { createEvent, updateEvent } from '../eventActions';
@@ -12,20 +13,14 @@ import SelectInput from '../../../app/common/form/SelectInput';
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
 
-  let event = {
-    title: '',
-    date: '',
-    city: '',
-    venue: '',
-    hostedBy: ''
-  }
+  let event = {}
 
   if(eventId && state.events.length > 0){
     event = state.events.filter(event => eventId === event.id)[0];
   }
 
   return {
-    event
+    initialValues: event
   }
 };
 
@@ -43,18 +38,28 @@ const category = [
     {key: 'travel', text: 'Travel', value: 'travel'},
 ];
 
-class EventForm extends Component {
-  onFormSubmit = (evt) => {
-    evt.preventDefault();
+const validate = combineValidators({
+  title: isRequired({message: "The Event Title Is Required"}),
+  category: isRequired({message: "Please Select A Category"}),
+  description: composeValidators(
+    isRequired({message: "Please Enter A Description"}),
+    hasLengthGreaterThan(4)({message: "Description should be longer than 4 characters"})
+  )(),
+  city: isRequired('city'),
+  venue: isRequired('venue')
+})
 
-    if(this.state.event.id){
-      this.props.updateEvent(this.state.event);
+class EventForm extends Component {
+  onFormSubmit = values => {
+    if(this.props.initialValues.id){
+      this.props.updateEvent(values);
       this.props.history.goBack();
     } else {
       const newEvent = {
-        ...this.state.event,
+        ...values,
         id: cuid(),
-        hostPhotoURL: '/assets/user.png'
+        hostPhotoURL: '/assets/user.png',
+        hostedBy: 'Bob'
       }
 
       this.props.createEvent(newEvent);
@@ -67,7 +72,7 @@ class EventForm extends Component {
       <Grid>
         <Grid.Column width={10}>
           <Segment>
-            <Form onSubmit={this.onFormSubmit}>
+            <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
               <Field 
                 name='title'
                 type='text'
@@ -118,4 +123,4 @@ class EventForm extends Component {
   }
 }
 
-export default connect(mapState, actions)(reduxForm({form: 'eventForm'})(EventForm));
+export default connect(mapState, actions)(reduxForm({form: 'eventForm', enableReinitialize: true})(EventForm));
