@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Form, Button, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
+import moment from 'moment';
 import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import cuid from 'cuid';
  
@@ -9,6 +10,7 @@ import { createEvent, updateEvent } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
+import DateInput from '../../../app/common/form/DateInput';
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -68,7 +70,7 @@ class EventForm extends Component {
   };
 
   render() {
-    const {invalid, submitting, prisine} = this.props;
+    const {invalid, submitting, pristine} = this.props;
 
     return (
       <Grid>
@@ -110,8 +112,11 @@ class EventForm extends Component {
               <Field 
                 name='date'
                 type='text'
-                component={TextInput}
-                placeholder='Event Date'
+                component={DateInput}
+                dateFormat='YYYY/MM/DD HH:mm'
+                timeFormat='HH:mm'
+                showTimeSelect
+                placeholder='Date and Time of event'
               />
               <Button 
                 disabled={invalid || submitting || pristine}
