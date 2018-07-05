@@ -7,6 +7,7 @@ import cuid from 'cuid';
 import { createEvent, updateEvent } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
+import SelectInput from '../../../app/common/form/SelectInput';
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -32,6 +33,15 @@ const actions = {
   createEvent,
   updateEvent
 };
+
+const category = [
+    {key: 'drinks', text: 'Drinks', value: 'drinks'},
+    {key: 'culture', text: 'Culture', value: 'culture'},
+    {key: 'film', text: 'Film', value: 'film'},
+    {key: 'food', text: 'Food', value: 'food'},
+    {key: 'music', text: 'Music', value: 'music'},
+    {key: 'travel', text: 'Travel', value: 'travel'},
+];
 
 class EventForm extends Component {
   onFormSubmit = (evt) => {
@@ -67,7 +77,8 @@ class EventForm extends Component {
               <Field 
                 name='category'
                 type='text'
-                component={TextInput}
+                component={SelectInput}
+                options={category}
                 placeholder='What Is Your Event About'
               />
               <Field 
