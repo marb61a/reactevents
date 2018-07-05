@@ -48,11 +48,14 @@ const validate = combineValidators({
     hasLengthGreaterThan(4)({message: "Description should be longer than 4 characters"})
   )(),
   city: isRequired('city'),
-  venue: isRequired('venue')
+  venue: isRequired('venue'),
+  date: isRequired('date')
 })
 
 class EventForm extends Component {
   onFormSubmit = values => {
+    values.date = moment(values.date).format()
+
     if(this.props.initialValues.id){
       this.props.updateEvent(values);
       this.props.history.goBack();
@@ -113,7 +116,7 @@ class EventForm extends Component {
                 name='date'
                 type='text'
                 component={DateInput}
-                dateFormat='YYYY/MM/DD HH:mm'
+                dateFormat='YYYY-MM-DD HH:mm'
                 timeFormat='HH:mm'
                 showTimeSelect
                 placeholder='Date and Time of event'
