@@ -6,6 +6,7 @@ import cuid from 'cuid';
  
 import { createEvent, updateEvent } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
+import TextArea from '../../../app/common/form/TextArea';
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -33,10 +34,6 @@ const actions = {
 };
 
 class EventForm extends Component {
-  state = {
-    event: Object.assign({}, this.props.event)
-  }
-
   onFormSubmit = (evt) => {
     evt.preventDefault();
 
@@ -53,21 +50,9 @@ class EventForm extends Component {
       this.props.createEvent(newEvent);
       this.props.history.push('/events');
     }
-  }
-
-  onInputChange = (evt) => {
-    const newEvent = this.state.event;
-    newEvent[evt.target.name] = evt.target.value;
-
-    this.setState({
-      event: newEvent
-    })
-  }
+  };
 
   render() {
-    const {handleCancel} = this.props;
-    const {event} = this.state;
-
     return (
       <Grid>
         <Grid.Column width={10}>
@@ -88,7 +73,8 @@ class EventForm extends Component {
               <Field 
                 name='description'
                 type='text'
-                component={TextInput}
+                rows={3}
+                component={TextArea}
                 placeholder='Tell Us About Your Event'
               />
               <Field 
