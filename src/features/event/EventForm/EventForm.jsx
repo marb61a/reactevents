@@ -68,6 +68,8 @@ class EventForm extends Component {
   };
 
   render() {
+    const {invalid, submitting, prisine} = this.props;
+
     return (
       <Grid>
         <Grid.Column width={10}>
@@ -111,10 +113,19 @@ class EventForm extends Component {
                 component={TextInput}
                 placeholder='Event Date'
               />
-              <Button positive type="submit">
+              <Button 
+                disabled={invalid || submitting || pristine}
+                positive 
+                type="submit"
+              >
                 Submit
               </Button>
-              <Button onClick={this.props.history.goBack} type="button">Cancel</Button>
+              <Button 
+                onClick={this.props.history.goBack} 
+                type="button"
+              >
+                Cancel
+              </Button>
             </Form>
           </Segment>
         </Grid.Column>
@@ -123,4 +134,6 @@ class EventForm extends Component {
   }
 }
 
-export default connect(mapState, actions)(reduxForm({form: 'eventForm', enableReinitialize: true})(EventForm));
+export default connect(mapState, actions)(
+  reduxForm({form: 'eventForm', enableReinitialize: true, validate})(EventForm)
+);
