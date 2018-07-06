@@ -20,6 +20,12 @@ class TestComponent extends Component {
     address: ''
   }
 
+  handleScriptLoad = () => {
+    this.setState({
+      scriptLoaded: true
+    });
+  }
+
   handleFormSubmit = (event) => {
     event.preventDefault()
 
@@ -28,6 +34,8 @@ class TestComponent extends Component {
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error))
   }
+
+  onChange = (address) => this.setState({address});
 
   render() {
     const inputProps = {
@@ -39,10 +47,23 @@ class TestComponent extends Component {
 
     return (
       <div>
+        <Script 
+          url='https://maps.googleapis.com/maps/api/js?key=API&libraries=places'
+          onLoad={this.handleScriptLoad}
+        />
+
         <h1>Test Area</h1>
         <h3>The answer is : {data}</h3>
         <Button onClick={incrementCounter} color='green' content='Increment'/>
         <Button onClick={decrementCounter} color='red' content='Decrement'/>
+        <br/><br/>
+
+        <form onSubmit={this.handleFormSubmit}>
+          {this.state.scriptLoaded && 
+            <PlacesAutocomplete inputProps={inputProps} />
+          }
+          <button type="submit">Submit</button>
+        </form>
       </div>
     );
   }
