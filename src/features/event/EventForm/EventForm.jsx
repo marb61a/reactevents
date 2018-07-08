@@ -60,8 +60,13 @@ const validate = combineValidators({
 class EventForm extends Component {
   state = {
     cityLatLng: {},
-    venueLatLng: {}
+    venueLatLng: {},
+    scriptLoaded: false
   }
+
+  handleScriptLoaded = () => this.setState({
+    scriptLoaded: true
+  });
 
   handleCitySelect = (selectedCity) => {
     geocodeByAddress(selectedCity)
@@ -70,7 +75,23 @@ class EventForm extends Component {
         this.setState({
           cityLatLng: latlng
         });
-      });
+      })
+      .then(() => {
+        this.props.change('city', selectedCity)
+      })
+  } 
+
+  handleVenueSelect = (selectedVenue) => {
+    geocodeByAddress(selectedVenue)
+      .then(results => getLatLng(results[0]))
+      .then(latlng => {
+        this.setState({
+          venueLatLng: latlng
+        });
+      })
+      .then(() => {
+        this.props.change('venue', selectedVenue);
+      })
   } 
 
   onFormSubmit = values => {
@@ -137,21 +158,23 @@ class EventForm extends Component {
                 type='text'
                 component={PlaceInput}
                 options={{
-                  location: new google.maps.latlng(this.state.cityLatLng),
+                  location: new google.maps.LatLng(this.state.cityLatLng),
                   radius: 1000,
                   types: ['establishment']
                 }}
                 placeholder='Event Venue'
               />
-              <Field 
-                name='date'
-                type='text'
-                component={DateInput}
-                dateFormat='YYYY-MM-DD HH:mm'
-                timeFormat='HH:mm'
-                showTimeSelect
-                placeholder='Date and Time of event'
-              />
+              { this.state.scriptLoaded &&
+                <Field 
+                  name='date'
+                  type='text'
+                  component={DateInput}
+                  dateFormat='YYYY-MM-DD HH:mm'
+                  timeFormat='HH:mm'
+                  showTimeSelect
+                  placeholder='Date and Time of event'
+                />
+              }
               <Button 
                 disabled={invalid || submitting || pristine}
                 positive 
