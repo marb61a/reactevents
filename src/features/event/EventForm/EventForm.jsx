@@ -95,7 +95,8 @@ class EventForm extends Component {
   } 
 
   onFormSubmit = values => {
-    values.date = moment(values.date).format()
+    values.date = moment(values.date).format();
+    values.venueLatLng = this.state.venueLatLng;
 
     if(this.props.initialValues.id){
       this.props.updateEvent(values);
@@ -163,6 +164,7 @@ class EventForm extends Component {
                   types: ['establishment']
                 }}
                 placeholder='Event Venue'
+                onSelect={this.handleVenueSelect}
               />
               { this.state.scriptLoaded &&
                 <Field 
