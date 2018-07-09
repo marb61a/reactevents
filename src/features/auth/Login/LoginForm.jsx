@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Segment, Button } from 'semantic-ui-react';
-import { Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import TextInput from '../../../app/common/form/TextInput';
 
 const LoginForm = () => {
@@ -27,4 +27,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default reduxForm({name: 'loginForm'})(LoginForm);
