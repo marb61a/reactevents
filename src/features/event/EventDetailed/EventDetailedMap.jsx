@@ -20,11 +20,7 @@ const EventDetailedMap = ({lat, lng}) => {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
         >
-          <Marker
-            lat={59.955413}
-            lng={30.337844}
-            text={'Kreyser Avrora'}
-          />
+          <Marker lat={lat} lng={lng} />
         </GoogleMapReact>
       </div>
     </Segment>
