@@ -44,3 +44,14 @@ export const incrementAsync = () => {
     dispatch(finishCounterAction());
   };
 };
+
+export const decrementAsync = () => {
+  return async dispatch => {
+    dispatch(startCounterAction());
+    await delay(1000);
+    dispatch({
+      type: DECREMENT_COUNTER
+    });
+    dispatch(finishCounterAction());
+  };
+};

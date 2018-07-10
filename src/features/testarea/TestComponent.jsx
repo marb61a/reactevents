@@ -5,15 +5,15 @@ import { Button, Icon } from 'semantic-ui-react';
 import Script from 'react-load-script';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
-import { incrementCounter, decrementCounter } from './testActions';
+import { incrementAsync, decrementAsync } from './testActions';
 
 const mapState = (state) => ({
   data: state.test.data
 });
 
 const actions = {
-  incrementCounter,
-  decrementCounter
+  incrementAsync,
+  decrementAsync
 }
 
 const Marker = () => <Icon 
