@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {Modal} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 
-import LoginForm from '../auth/Login/LoginForm';
 import {closeModal} from "./modalActions";
+import RegisterForm from "../auth/Register/RegisterForm";
 
 const actions = {closeModal};
 
-class LoginModal extends Component {
+class RegisterModal extends Component {
   render() {
     return (
       <Modal
@@ -16,11 +16,11 @@ class LoginModal extends Component {
         onClose={this.props.closeModal}
       >
         <Modal.Header>
-            Login to Re-vents
+            Sign Up to Re-vents!
         </Modal.Header>
         <Modal.Content>
             <Modal.Description>
-                <LoginForm />
+                <RegisterForm />
             </Modal.Description>
         </Modal.Content>
       </Modal>
@@ -28,4 +28,4 @@ class LoginModal extends Component {
   }
 }
 
-export default connect(null, actions)(LoginModal);
+export default connect(null, actions)(RegisterModal);
