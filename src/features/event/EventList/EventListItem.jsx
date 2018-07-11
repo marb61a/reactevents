@@ -27,7 +27,7 @@ class EventListItem extends Component {
         <Segment>
           <span>
             <Icon name="clock" /> 
-              {format(event.date, 'dddd Do MMMM')} at
+              {format(event.date, 'dddd Do MMMM')} at{' '}
               {format(event.date, 'HH:mm')} |
             <Icon name="marker" /> {event.venue}
           </span>
