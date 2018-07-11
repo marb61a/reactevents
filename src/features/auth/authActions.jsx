@@ -2,11 +2,14 @@ import { LOGIN_USER, SIGN_OUT_USER } from './authConstants';
 import { closeModal } from '../modals/modalActions';
 
 export const login = (creds) => {
-  return dispatch => {
-    dispatch({
-      type: LOGIN_USER,
-      payload: {creds}
-    })
+  return (dispatch, getState, {getFirebase}) => {
+    const firebase = getFirebase();
+    try {
+
+    } catch(error){
+      console.log(error);
+    }
+
     dispatch(closeModal())
   };
 };
