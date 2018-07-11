@@ -1,5 +1,5 @@
 import { LOGIN_USER, SIGN_OUT_USER } from './authConstants';
-import { create } from '../../app/reducers/rootReducer';
+
 import { createReducer } from '../../app/common/util/reducerUtil';
 
 const initialState = {

@@ -25,11 +25,7 @@ const ModalManager = ({currentModal}) => {
     renderedModal = <ModalComponent {...modalProps} />
   }
 
-  return (
-    <span>
-      {renderedModal}
-    </span>
-  );
+  return <span>{renderedModal}</span>
 }
 
 export default connect(mapState)(ModalManager);
