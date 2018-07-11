@@ -1,6 +1,16 @@
 import {toastr} from 'react-redux-toastr';
-import { CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS } from './eventConstants';
-import { asyncActionStart, asyncActionFinish, asyncActionError } from '../async/asyncActions';
+
+import { 
+  CREATE_EVENT, 
+  UPDATE_EVENT, 
+  DELETE_EVENT, 
+  FETCH_EVENTS 
+} from './eventConstants';
+import { 
+  asyncActionStart, 
+  asyncActionFinish, 
+  asyncActionError 
+} from '../async/asyncActions';
 import { fetchSampleData } from '../../app/data/mockAPI';
 
 export const fetchEvents = (events) => {
@@ -8,7 +18,7 @@ export const fetchEvents = (events) => {
     type: FETCH_EVENTS,
     payload: events
   }
-}
+};
 
 export const createEvent = (event) => {
   return async dispatch => {
@@ -25,7 +35,7 @@ export const createEvent = (event) => {
       toastr.error('Oops', 'Something went wrong');
     }
   }
-}
+};
 
 export const updateEvent = (event) => {
   return async dispatch => {
@@ -42,7 +52,7 @@ export const updateEvent = (event) => {
       toastr.error('Oops', 'Something went wrong');
     }
   }
-} 
+};
 
 export const deleteEvent = (eventId) => {
   return {
@@ -51,7 +61,7 @@ export const deleteEvent = (eventId) => {
       eventId
     }
   }
-}
+};
 
 export const loadEvents = () => {
   return async dispatch => {
@@ -65,4 +75,4 @@ export const loadEvents = () => {
       dispatch(asyncActionError());
     }
   }
-}
+};

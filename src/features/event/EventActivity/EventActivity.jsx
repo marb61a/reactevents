@@ -5,8 +5,14 @@ const EventActivity = () => {
     return (
       <div>
         <Header 
-        
+          attached='top'
+          content='Recent Activity'
         />
+        <Segment>
+          <p>
+            Recent Activity
+          </p>
+        </Segment>
       </div>
     );
 }

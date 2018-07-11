@@ -8,10 +8,10 @@ export const openModal = (modalType, modalProps) => {
       modalProps
     }
   }
-}
+};
 
 export const closeModal = (modalType, modalProps) => {
   return {
     type: MODAL_CLOSE
   }
-}
+};
