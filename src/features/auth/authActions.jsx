@@ -58,16 +58,26 @@ export const registerUser = (user) => {
 
 // Facebook & Google Login
 export const socialLogin = (selectedProvider) => {
-  return async(dispatch, getState, { getFirebase }) => {
+  return async(dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
+    const firestore = getFirestore();
 
     try{
       dispatch(closeModal());
 
-      await firebase.login({
+      let user = await firebase.login({
         provider: selectedProvider,
         type: 'popup'
-      })
+      });
+      
+      // Stops all user info being displayed on the page
+      if(user.additionalUserInfo.isNewUser){
+        await firestore.set(`users/${user.user.uid}`, {
+          displayName: user.profile.displayName,
+          photoURL: user.profile.avatarUrl,
+          createdAt: firestore.FieldValue.serverTimestamp()
+        });
+      }
     } catch(error){
       console.log(error);
     }
