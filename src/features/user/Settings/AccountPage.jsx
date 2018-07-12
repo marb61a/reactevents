@@ -23,10 +23,10 @@ const validate = combineValidators({
   newPassword2: combineValidators(
     isRequired({message: 'Please confirm the password'}),
     matchesField('newPassword1')({message: 'Passwords do not match'})
-  )
+  )()
 });
 
-const AccountPage = ({ error }) => {
+const AccountPage = ({ error, invalid, submitting }) => {
   return (
     <Segment>
       <Header dividing size="large" content="Account" />
@@ -60,7 +60,12 @@ const AccountPage = ({ error }) => {
             </Label>
           )}
           <Divider />
-          <Button size="large" positive content="Update Password" />
+          <Button 
+            disabled={invalid || submitting}
+            size="large" 
+            positive 
+            content="Update Password" 
+          />
         </Form>
       </div>
 
