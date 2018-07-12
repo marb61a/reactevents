@@ -1,7 +1,30 @@
 import React from 'react';
-import { Segment, Header, Form, Divider, Label, Button, Icon } from 'semantic-ui-react';
+import { 
+  Segment, 
+  Header,
+  Form, 
+  Divider, 
+  Label, 
+  Button, 
+  Icon 
+} from 'semantic-ui-react';
+import { 
+  combineValidators,
+  matchesField,
+  isRequired,
+  composeValidators
+} from 'revalidate';
 import { Field, reduxForm } from 'redux-form';
+
 import TextInput from '../../../app/common/form/TextInput';
+
+const validate = combineValidators({
+  newPassword1: isRequired({message: 'Please enter a password'}),
+  newPassword2: combineValidators(
+    isRequired({message: 'Please confirm the password'}),
+    matchesField('newPassword1')({message: 'Passwords do not match'})
+  )
+});
 
 const AccountPage = ({ error }) => {
   return (
@@ -62,4 +85,4 @@ const AccountPage = ({ error }) => {
   );
 };
 
-export default reduxForm({ form: 'account' })(AccountPage);
+export default reduxForm({ form: 'account', validate })(AccountPage);
