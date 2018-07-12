@@ -27,6 +27,21 @@ export const registerUser = (user) => {
     const firestore = getFirestore();
 
     try {
+      // Create the user in auth
+      let createdUser = await firebase
+        .auth()
+        .createUserWithEmailAndPassword();
+      console.log(createdUser);
+
+      // Update the auth profile
+      await createdUser.updateProfile({
+        displayName: user.displayName
+      });
+
+      // Create a new profile in Firestore
+      let newUser = {
+        
+      }
 
     } catch(error) {
       console.log(error);
