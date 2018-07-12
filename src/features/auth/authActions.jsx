@@ -30,7 +30,7 @@ export const registerUser = (user) => {
       // Create the user in auth
       let createdUser = await firebase
         .auth()
-        .createUserWithEmailAndPassword();
+        .createUserWithEmailAndPassword(user.email, user.password);
       console.log(createdUser);
 
       // Update the auth profile
@@ -40,11 +40,18 @@ export const registerUser = (user) => {
 
       // Create a new profile in Firestore
       let newUser = {
-        
+        displayName: user.displayName,
+        createdAt: firestore.FieldValue.serverTimestamp()
       }
 
+      await firestore.set(`users/${createdUser.uid}`, {...newUser});
+      dispatch(closeModal());
     } catch(error) {
       console.log(error);
+
+      throw new SubmissionError({
+        _error: error.message
+      });
     }
   }
 };

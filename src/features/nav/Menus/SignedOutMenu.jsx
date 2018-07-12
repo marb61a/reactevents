@@ -14,6 +14,6 @@ const SignedOutMenu = ({signIn, register}) => {
          />
       </Menu.Item>
     );
-}
+};
 
 export default SignedOutMenu;
