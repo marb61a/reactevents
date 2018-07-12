@@ -37,4 +37,4 @@ const LoginForm = ({login, handleSubmit, error }) => {
   );
 };
 
-export default connect(null, actions)(reduxForm({name: 'loginForm'})(LoginForm));
+export default connect(null, actions)(reduxForm({form: 'loginForm'})(LoginForm));

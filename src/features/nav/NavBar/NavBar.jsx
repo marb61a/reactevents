@@ -28,14 +28,14 @@ class NavBar extends Component {
   };
 
   handleSignOut = () => {
-    this.props.logout();
+    this.props.firebase.logout();
 
     this.props.history.push('/');
   }
 
   render() {
     const { auth } = this.props;
-    const authenticated = auth.authenticated;
+    const authenticated = auth.isLoaded && !auth.isEmpty;
 
     return (
       <Menu inverted fixed="top">
@@ -63,7 +63,7 @@ class NavBar extends Component {
           </Menu.Item> }
           {authenticated 
             ? ( <SignedInMenu 
-                currentUser={auth.currentUser}
+                auth={auth}
                 signOut={this.handleSignOut} 
               /> )
             : ( <SignedOutMenu 

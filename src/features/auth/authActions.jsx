@@ -1,13 +1,14 @@
 import { SubmissionError } from 'redux-form';
 import { SIGN_OUT_USER } from './authConstants';
 import { closeModal } from '../modals/modalActions';
+import { getFirestore } from 'redux-firestore';
 
 export const login = creds => {
   return async (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
 
     try {
-      await firebase.auth().signinWithEmailAndPassword(
+      await firebase.auth().signInWithEmailAndPassword(
         creds.email, creds.password
       );
       dispatch(closeModal());
@@ -20,8 +21,15 @@ export const login = creds => {
   };
 };
 
-export const logout = () => {
-  return {
-    type: SIGN_OUT_USER
-  };
+export const registerUser = (user) => {
+  return async(dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+
+    try {
+
+    } catch(error) {
+      console.log(error);
+    }
+  }
 };
