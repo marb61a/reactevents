@@ -55,3 +55,21 @@ export const registerUser = (user) => {
     }
   }
 };
+
+// Facebook & Google Login
+export const socialLogin = (selectedProvider) => {
+  return async(dispatch, getState, { getFirebase }) => {
+    const firebase = getFirebase();
+
+    try{
+      dispatch(closeModal());
+
+      await firebase.login({
+        provider: selectedProvider,
+        type: 'popup'
+      })
+    } catch(error){
+      console.log(error);
+    }
+  }
+}
