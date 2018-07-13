@@ -21,7 +21,7 @@ const mapState = (state) => ({
   user: state.firebase.profile
 });
 
-const SettingsDashboard = () => {
+const SettingsDashboard = ({ updatePassword, providerId }) => {
     return (
       <Grid>
         <Grid.Column width={12}>
@@ -32,7 +32,9 @@ const SettingsDashboard = () => {
             <Route path="/settings/photos" component={PhotosPage} />
             <Route 
               path="/settings/account"
-              render={() => <AccountPage updatePassword={updatePassword} />}
+              render={() => <AccountPage updatePassword={updatePassword} 
+                providerId={providerId}
+              />}
             />
           </Switch>
         </Grid.Column>

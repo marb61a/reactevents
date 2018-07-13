@@ -40,6 +40,11 @@ if(module.hot){
   });
 }
 
-render();
+// Stops rendering errors due to authentication not completed
+store.firebaseAuthIsReady
+  .then(() => {
+    render();
+  });
+
 
 registerServiceWorker();
