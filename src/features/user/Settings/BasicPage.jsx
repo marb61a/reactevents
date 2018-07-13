@@ -4,8 +4,9 @@ import {Field, reduxForm} from 'redux-form';
 import DateInput from "../../../app/common/form/DateInput";
 import PlaceInput from "../../../app/common/form/PlaceInput";
 import TextInput from "../../../app/common/form/TextInput";
+import RadioInput from "../../../app/common/form/RadioInput";
 
-class Basics extends Component {
+class BasicPage extends Component {
   render() {
     const {pristine, submitting} = this.props;
     return (
@@ -20,7 +21,12 @@ class Basics extends Component {
             placeholder='Known As'
           />
           <Form.Group inline>
-            {/* todo: Gender Radio button */}
+            <Field 
+              name='gender'
+              type='radio'
+              value='male'
+              label='Male'
+            />
           </Form.Group>
           <Field
             width={8}
@@ -44,4 +50,4 @@ class Basics extends Component {
   }
 }
 
-export default reduxForm({form: 'userProfile'})(Basics);
+export default reduxForm({form: 'userProfile', enableReinitialize: true})(BasicPage);
