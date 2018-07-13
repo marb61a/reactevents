@@ -6,7 +6,7 @@ import moment from 'moment';
 
 const DateInput = (
   { input: 
-    {value, onChange, ...restInput}, 
+    {value, onChange, onBlur, ...restInput}, 
     width, placeholder, 
     meta: {touched, error}, ...rest
   }
@@ -22,6 +22,8 @@ const DateInput = (
         placeholderText={placeholder}
         selected={value ? moment(value) : null}
         onChange={onChange}
+        // Prevents date reset when using redux forms
+        onBlur={() => onBlur()}
         {...restInput}
       />
       {touched && error &&
