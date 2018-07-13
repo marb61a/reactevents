@@ -21,7 +21,7 @@ const mapState = (state) => ({
   user: state.firebase.profile
 });
 
-const SettingsDashboard = ({ updatePassword, providerId, user }) => {
+const SettingsDashboard = ({ updatePassword, providerId, user, updateProfile }) => {
     return (
       <Grid>
         <Grid.Column width={12}>
@@ -29,7 +29,9 @@ const SettingsDashboard = ({ updatePassword, providerId, user }) => {
             <Redirect exact from="/settings" to="/settings/basic"/>
             <Route 
               path="/settings/basic"
-              render={() => <BasicPage initialValues={user}/> }
+              render={() => <BasicPage initialValues={user}
+                updateProfile={updateProfile}
+              /> }
             />
             <Route path="/settings/about" component={AboutPage} />
             <Route path="/settings/photos" component={PhotosPage} />
