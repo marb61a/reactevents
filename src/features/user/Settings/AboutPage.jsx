@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Divider, Form, Header, Segment } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
+
 import RadioInput from '../../../app/common/form/RadioInput';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
@@ -16,12 +17,12 @@ const interests = [
   { key: 'travel', text: 'Travel', value: 'travel' }
 ];
 
-const About = ({ pristine, submitting }) => {
+const AboutPage = ({ pristine, submitting, handleSubmit, updateProfile }) => {
   return (
     <Segment>
       <Header dividing size="large" content="About Me" />
       <p>Complete your profile to get the most out of this site</p>
-      <Form>
+      <Form onSubmit={handleSubmit(updateProfile)}>
         <Form.Group inline>
           <label>Tell us your status: </label>
           <Field name="status" component={RadioInput} type="radio" value="single" label="Single" />
@@ -66,10 +67,19 @@ const About = ({ pristine, submitting }) => {
           placeholder="Country of Origin"
         />
         <Divider />
-        <Button disabled={pristine || submitting} size="large" positive content="Update Profile" />
+        <Button 
+          disabled={pristine || submitting} 
+          size="large" 
+          positive 
+          content="Update Profile" 
+        />
       </Form>
     </Segment>
   );
 };
 
-export default reduxForm({ form: 'userProfile', enableReinitialize: true })(About);
+export default reduxForm({ 
+  form: 'userProfile', 
+  enableReinitialize: true, 
+  destroyOnUnmount: false 
+})(AboutPage);
