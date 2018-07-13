@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Segment, Form, Header, Divider, Button} from 'semantic-ui-react';
 import {Field, reduxForm} from 'redux-form';
+import moment from 'moment';
+
 import DateInput from "../../../app/common/form/DateInput";
 import PlaceInput from "../../../app/common/form/PlaceInput";
 import TextInput from "../../../app/common/form/TextInput";
@@ -21,11 +23,20 @@ class BasicPage extends Component {
             placeholder='Known As'
           />
           <Form.Group inline>
+            <label>Gender: </label>
             <Field 
               name='gender'
               type='radio'
               value='male'
               label='Male'
+              component={RadioInput}
+            />
+            <Field 
+              name='gender'
+              type='radio'
+              value='female'
+              label='Female'
+              component={RadioInput}
             />
           </Form.Group>
           <Field
@@ -33,6 +44,11 @@ class BasicPage extends Component {
             name='dateOfBirth'
             component={DateInput}
             placeholder='Date of Birth'
+            dateFormat='YYYY-MM-DD'
+            showYearDropdown={true}
+            showMonthDropdown={true}
+            dropdownMode='select'
+            maxDate={moment().subtract(18, 'years')}
           />
           <Field
             name='city'
