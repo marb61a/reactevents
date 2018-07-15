@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import {
   Image, Segment, Header, Divider, Grid, Button, Card, Icon
 } from 'semantic-ui-react';
@@ -105,4 +106,4 @@ class PhotosPage extends Component {
   }
 };
 
-export default PhotosPage;
+export default connect()(PhotosPage);

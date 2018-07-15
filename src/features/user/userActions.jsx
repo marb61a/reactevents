@@ -32,27 +32,45 @@ export const uploadProfileImage = (file, fileName) => {
     // This is a synchronous method so no need to await
     const user = firebase.auth().currentUser();
     const path = `${user.uid}/user_images`;
+    const options = {
+      name: fileName
+    };
 
     try{
       // Upload the image to firebase
       let uploadedFile = await firebase.uploadFile(path, file, null, options);
       
       // Get image url
-      let downloadUrl = await uploadedFile.uploadTaskSnapshot.downloadUrl;
+      let downloadURL = await uploadedFile.uploadTaskSnapshot.downloadURL;
 
       // Get userdoc
       let userDoc = await firestore.get(`users/${user.uid}`);
 
       // Check if there is an image url
-      if(!userDoc.data().photoUrl){
+      if(!userDoc.data().photoURL){
         await firebase.updateProfile({
-          photoUrl: downloadUrl
+          photoURL: downloadURL
         });
-        
+
+        await user.updateProfile({
+          photoURL: downloadURL
+        });
       }
+      
+      // Add the new image to images collection
+      return await firestore.add({
+        collection: 'users',
+        doc: user.uid,
+        subcollections: [{collection: 'photos'}]
+      }, {
+        name: fileName,
+        url: downloadURL
+      });
 
     } catch(error){
       console.log(error);
+
+      throw new Error('There is a problem uploading the image');
     }
   }
 };
