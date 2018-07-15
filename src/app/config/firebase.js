@@ -2,8 +2,8 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCiLmo5at2DBO_37oWns_8owHJDqyLVOKc",
-  authDomain: "",
+  apiKey: "",
+  authDomain: "reactevents-32fee.firebaseapp.com",
   databaseURL: "https://reactevents-32fee.firebaseio.com",
   projectId: "reactevents-32fee",
   storageBucket: "",
