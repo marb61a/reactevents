@@ -2,11 +2,11 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "reactevents-32fee.firebaseapp.com",
+  apiKey: "AIzaSyCiLmo5at2DBO_37oWns_8owHJDqyLVOKc",
+  authDomain: "",
   databaseURL: "https://reactevents-32fee.firebaseio.com",
   projectId: "reactevents-32fee",
-  storageBucket: "",
+  storageBucket: "reactevents-32fee.appspot.com",
   messagingSenderId: "854813512614"
 }
 
