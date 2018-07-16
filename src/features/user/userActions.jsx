@@ -105,7 +105,17 @@ export const deletePhoto = (photo) => {
 
 // Allow users to set main image
 export const setMainPhoto = photo => {
-  async (dispatch, getState, {getFirebase}) => {
+  return async (dispatch, getState, {getFirebase}) => {
+    const firebase = getFirebase();
 
+    try {
+      return await firebase.updateProfile({
+        photoURL: photo.url
+      });
+    } catch(error){
+      console.log(error);
+
+      throw new Error('There was a problem setting main image');
+    }
   };
 };
