@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { redux, compose } from 'redux';
+import { compose } from 'redux';
 import {
   Image, Segment, Header, Divider, Grid, Button, Card, Icon
 } from 'semantic-ui-react';
@@ -20,7 +20,7 @@ const query = ({auth}) => {
       subcollections: [{collection: 'photos'}],
       storeAs: 'photos'
     }
-  ]
+  ];
 };
 
 const actions = {
@@ -29,10 +29,11 @@ const actions = {
   setMainPhoto
 };
 
-const mapState = (state) => ({
+const mapState = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
-  photos: state.firebase.ordered.photos
+  photos: state.firebase.ordered.photos,
+  loading: state.async.loading
 });
 
 class PhotosPage extends Component {
@@ -42,12 +43,20 @@ class PhotosPage extends Component {
     fileName: '',
     cropResult: null,
     image: {}
-  }
+  };
+
+  cancelCrop = () => {
+    this.setState({
+      files: [],
+      image: {}
+    });
+  };
 
   uploadImage = async () => {
     try{
       await this.props.uploadProfileImage(
-        this.state.image, this.state.fileName
+        this.state.image, 
+        this.state.fileName
       );
       this.cancelCrop();
       toastr.success('Success', 'Your image has been uploaded');
@@ -73,16 +82,9 @@ class PhotosPage extends Component {
     }
   }
 
-  cancelCrop = () => {
-    this.setState({
-      files: [],
-      image: {}
-    });
-  };
-
   cropImage = () => {
     // Accessing the refs, if there is no image to crop then just return
-    if(typeof this.refs.cropper.getCroppedCanvas === 'undefined'){
+    if(typeof this.refs.cropper.getCroppedCanvas() === 'undefined'){
       return;
     }
 
@@ -94,9 +96,9 @@ class PhotosPage extends Component {
         image: blob
       });
     }, 'image/jpeg');
-  }
+  };
 
-  onDrop = (files) => {
+  onDrop = files => {
     this.setState({
       files,
       fileName: files[0].name
@@ -104,12 +106,12 @@ class PhotosPage extends Component {
   };
 
   render() {
-    const { photos, profile } = this.props;
+    const { photos, profile, loading } = this.props;
     let filteredPhotos;
 
     if(photos){
       filteredPhotos = photos.filter(photo => {
-        return photo.url !== profile.photoURL;
+        return photo.url !== profile.photoURL
       });
     }
 
@@ -157,12 +159,14 @@ class PhotosPage extends Component {
                 />
                 <Button.Group>
                   <Button 
+                    loading={loading}
                     onClick={this.uploadImage}
                     style={{width: '100px'}} 
                     positive 
                     icon='check' 
                   />
                   <Button 
+                    disabled={loading}
                     onClick={this.cancelCrop} 
                     style={{width: '100px'}} 
                     icon='close' 
@@ -176,7 +180,7 @@ class PhotosPage extends Component {
         <Header sub color='teal' content='All Photos'/>
         <Card.Group itemsPerRow={5}>
           <Card>
-            <Image src={profile.photoURL}/>
+            <Image src={ profile.photoURL || '/assets/user.png' }/>
             <Button positive>Main Photo</Button>
           </Card>
           { photos && filteredPhotos.map(photo => (

@@ -29,14 +29,14 @@ const SettingsDashboard = ({ updatePassword, providerId, user, updateProfile }) 
             <Redirect exact from="/settings" to="/settings/basic"/>
             <Route 
               path="/settings/basic"
-              render={() => <BasicPage initialValues={user}
-                updateProfile={updateProfile}
+              render={() => <BasicPage updateProfile={updateProfile} 
+                initialValues={user}
               /> }
             />
             <Route 
               path="/settings/about" 
-              render={() => <AboutPage initialValues={user}
-                updateProfile={updateProfile}
+              render={() => <AboutPage updateProfile={updateProfile} 
+                initialValues={user}
               /> }
             />
             <Route path="/settings/photos" component={PhotosPage} />
