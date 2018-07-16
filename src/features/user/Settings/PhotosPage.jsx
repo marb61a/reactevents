@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { redux, compose } from 'redux';
 import {
   Image, Segment, Header, Divider, Grid, Button, Card, Icon
 } from 'semantic-ui-react';
@@ -13,6 +15,11 @@ import { uploadProfileImage } from '../userActions';
 const actions = {
   uploadProfileImage
 };
+
+const mapState = (state) => ({
+  auth: state.firebase.auth,
+  profile: state.firebase.profile
+});
 
 class PhotosPage extends Component {
   state = {
@@ -104,10 +111,25 @@ class PhotosPage extends Component {
           <Grid.Column width={4}>
             <Header sub color='teal' content='Step 3 - Preview and Upload' />
             {this.state.files[0] &&
-              <Image 
-                style={{minHeight: '200px', minWidth: '200px'}}
-                src={this.state.cropResult}
-              />
+              <div>
+                <Image 
+                  style={{minHeight: '200px', minWidth: '200px'}}
+                  src={this.state.cropResult}
+                />
+                <Button.Group>
+                  <Button 
+                    onClick={this.uploadImage}
+                    style={{width: '100px'}} 
+                    positive 
+                    icon='check' 
+                  />
+                  <Button 
+                    onClick={this.cancelCrop} 
+                    style={{width: '100px'}} 
+                    icon='close' 
+                  />
+                </Button.Group>
+              </div>
             }
           </Grid.Column>
         </Grid>
@@ -133,4 +155,7 @@ class PhotosPage extends Component {
   }
 };
 
-export default connect(null, actions)(PhotosPage);
+export default compose(
+  connect(mapState, actions),
+  firestoreConnect()
+)(PhotosPage);
