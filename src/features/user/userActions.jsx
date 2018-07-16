@@ -30,7 +30,7 @@ export const uploadProfileImage = (file, fileName) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
     // This is a synchronous method so no need to await
-    const user = firebase.auth().currentUser();
+    const user = firebase.auth().currentUser;
     const path = `${user.uid}/user_images`;
     const options = {
       name: fileName
