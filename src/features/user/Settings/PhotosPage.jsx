@@ -161,7 +161,7 @@ class PhotosPage extends Component {
             <Image src={profile.photoURL}/>
             <Button positive>Main Photo</Button>
           </Card>
-          { photos && photos.map(photo => (
+          { photos && filteredPhotos.map(photo => (
             <Card key={photo.id}>
               <Image
                 src={photo.url}
