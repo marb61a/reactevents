@@ -101,4 +101,11 @@ export const deletePhoto = (photo) => {
       throw new Error('There was a problem deleting the image');
     }
   }
-}
+};
+
+// Allow users to set main image
+export const setMainPhoto = photo => {
+  async (dispatch, getState, {getFirebase}) => {
+
+  };
+};

@@ -10,7 +10,7 @@ import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import { toastr } from 'react-redux-toastr';
 
-import { uploadProfileImage } from '../userActions';
+import { uploadProfileImage, deletePhoto } from '../userActions';
 
 const query = ({auth}) => {
   return [
@@ -24,7 +24,8 @@ const query = ({auth}) => {
 };
 
 const actions = {
-  uploadProfileImage
+  uploadProfileImage,
+  deletePhoto
 };
 
 const mapState = (state) => ({
@@ -53,7 +54,15 @@ class PhotosPage extends Component {
       console.log(error);
       toastr.error('Oops', error.message);
     }
-  } 
+  };
+  
+  handlePhotoDelete = (photo) => async () => {
+    try {
+      this.props.deletePhoto(photo);
+    } catch (error) {
+      toastr.error('Oops', error.message)
+    }
+  }
 
   cancelCrop = () => {
     this.setState({
@@ -168,7 +177,12 @@ class PhotosPage extends Component {
               />
               <div className='ui two buttons'>
                 <Button basic color='green'>Main</Button>
-                <Button basic icon='trash' color='red' />
+                <Button 
+                  onClick={this.handlePhotoDelete(photo)}
+                  basic 
+                  icon='trash' 
+                  color='red' 
+                />
               </div>
             </Card>
             ))
