@@ -6,6 +6,13 @@ import {
 import Dropzone from 'react-dropzone';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import { toastr } from 'react-redux-toastr';
+
+import { uploadProfileImage } from '../userActions';
+
+const actions = {
+  uploadProfileImage
+};
 
 class PhotosPage extends Component {
   state = {
@@ -15,6 +22,26 @@ class PhotosPage extends Component {
     cropResult: null,
     image: {}
   }
+
+  uploadImage = async () => {
+    try{
+      await this.props.uploadProfileImage(
+        this.state.image, this.state.fileName
+      );
+      this.cancelCrop();
+      toastr.success('Success', 'Your image has been uploaded');
+    } catch(error){
+      console.log(error);
+      toastr.error('Oops', error.message);
+    }
+  } 
+
+  cancelCrop = () => {
+    this.setState({
+      files: [],
+      image: {}
+    });
+  };
 
   cropImage = () => {
     // Accessing the refs, if there is no image to crop then just return
@@ -106,4 +133,4 @@ class PhotosPage extends Component {
   }
 };
 
-export default connect()(PhotosPage);
+export default connect(null, actions)(PhotosPage);
