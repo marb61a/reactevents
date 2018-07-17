@@ -5,6 +5,7 @@ import cuid from 'cuid';
 import { 
   asyncActionStart, asyncActionFinish, asyncActionError
 } from '../async/asyncActions';
+import firebase from '../../app/config/firebase';
 
 export const updateProfile = (user) => {
   return async(dispatch, getState, { getFirebase }) => {
@@ -185,5 +186,6 @@ export const getUserEvents = () => {
     const today = new Date(Date.now());
     let eventsRef = firestore.collection('event_attendee');
     let query;
+    
   }
 }

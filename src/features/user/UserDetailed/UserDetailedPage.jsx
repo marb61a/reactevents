@@ -9,19 +9,9 @@ import UserDetailedDescription from './UserDetailedDescription';
 import UserDetailedPhotos from './UserDetailedPhotos';
 import UserDetailedSidebar from './UserDetailedSidebar';
 import UserDetailedEvents from './UserDetailedEvents';
+import { userDetailedQuery } from '../userQueries';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { getUserEvents } from '../userActions';
-
-const query = ({auth}) => {
-  return [
-    {
-      collection: 'users',
-      doc: auth.uid,
-      subcollections: [{collection: 'photos'}],
-      storeAs: 'photos'
-    }
-  ]
-};
 
 const mapState = (state, ownProps) => {
   let userUid = null;
@@ -44,7 +34,10 @@ const actions = {
 
 class UserDetailedPage extends Component {
   render(){
-    const { profile, photos } = this.props;
+    const { 
+      profile, photos, auth, match, requesting, events, eventsLoading 
+    } = this.props;
+    const isCurrentUser = auth.uid === match.params.id;
 
     return (
       <Grid>
