@@ -8,7 +8,6 @@ import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Script from 'react-load-script';
 import moment from 'moment';
 import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
-import cuid from 'cuid';
  
 import { createEvent, updateEvent } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
@@ -101,15 +100,8 @@ class EventForm extends Component {
     if(this.props.initialValues.id){
       this.props.updateEvent(values);
       this.props.history.goBack();
-    } else {
-      const newEvent = {
-        ...values,
-        id: cuid(),
-        hostPhotoURL: '/assets/user.png',
-        hostedBy: 'Bob'
-      }
-
-      this.props.createEvent(newEvent);
+    } else {    
+      this.props.createEvent(values);
       this.props.history.push('/events');
     }
   };

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { withFirestore } from 'react-redux-firestore';
 
 import EventDetailedHeader from './EventDetailedHeader';
 import EventDetailedInfo from './EventDetailedInfo';
@@ -21,7 +22,8 @@ const mapState = (state, ownProps) => {
   }
 }
 
-const EventDetailedPage = ({event}) => {
+class EventDetailedPage extends Component {
+  render() {
     return (
       <Grid>
         <Grid.Column width={10}>
@@ -34,6 +36,7 @@ const EventDetailedPage = ({event}) => {
         </Grid.Column>
       </Grid>
     );
+  }
 }
 
-export default connect(mapState)(EventDetailedPage);
+export default withFirestore(connect(mapState)(EventDetailedPage));
