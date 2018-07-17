@@ -18,6 +18,7 @@ import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
 import PlaceInput from '../../../app/common/form/PlaceInput';
+import cancelToggle from '../eventActions';
 
 const mapState = (state) => {
   let event = {}
@@ -27,13 +28,15 @@ const mapState = (state) => {
   }
 
   return {
-    initialValues: event
+    initialValues: event,
+    event
   }
 };
 
 const actions = {
   createEvent,
-  updateEvent
+  updateEvent,
+  cancelToggle
 };
 
 const category = [
@@ -112,7 +115,7 @@ class EventForm extends Component {
   };
 
   render() {
-    const {invalid, submitting, pristine} = this.props;
+    const {invalid, submitting, pristine, event, cancelToggle} = this.props;
 
     return (
       <Grid>
@@ -187,6 +190,13 @@ class EventForm extends Component {
               >
                 Cancel
               </Button>
+              <Button 
+                onClick={() => cancelToggle(!event.cancelled, event.id)}
+                type='button'
+                color={event.cancelled ? 'green' : 'red'}
+                floated='right'
+                content={event.cancelled ? 'Reactivate Event' : 'Cancel Event'}
+              />
             </Form>
           </Segment>
         </Grid.Column>
