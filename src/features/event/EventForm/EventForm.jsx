@@ -3,11 +3,14 @@
 import React, { Component } from 'react';
 import { Segment, Form, Button, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { withFirestore } from 'react-redux-firebase';
 import { reduxForm, Field } from 'redux-form';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Script from 'react-load-script';
 import moment from 'moment';
-import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
+import {
+  composeValidators, combineValidators, isRequired, hasLengthGreaterThan 
+} from 'revalidate';
  
 import { createEvent, updateEvent } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
@@ -16,13 +19,11 @@ import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
 import PlaceInput from '../../../app/common/form/PlaceInput';
 
-const mapState = (state, ownProps) => {
-  const eventId = ownProps.match.params.id;
-
+const mapState = (state) => {
   let event = {}
 
-  if(eventId && state.events.length > 0){
-    event = state.events.filter(event => eventId === event.id)[0];
+  if(state.firestore.ordered.events && state.firestore.ordered.events[0]){
+    event = state.firestore.ordered.events[0];
   }
 
   return {
@@ -63,6 +64,11 @@ class EventForm extends Component {
     scriptLoaded: false
   }
 
+  async componentDidMount(){
+    const { firestore, match } = this.props;
+    await firestore.get(`events/${match.params.id}`);
+  }
+
   handleScriptLoaded = () => this.setState({
     scriptLoaded: true
   });
@@ -94,7 +100,6 @@ class EventForm extends Component {
   } 
 
   onFormSubmit = values => {
-    values.date = moment(values.date).format();
     values.venueLatLng = this.state.venueLatLng;
 
     if(this.props.initialValues.id){
@@ -190,6 +195,7 @@ class EventForm extends Component {
   }
 }
 
-export default connect(mapState, actions)(
+export default withFirestore(
+  connect(mapState, actions)(
   reduxForm({form: 'eventForm', enableReinitialize: true, validate})(EventForm)
-);
+));
