@@ -9,6 +9,8 @@ import UserDetailedDescription from './UserDetailedDescription';
 import UserDetailedPhotos from './UserDetailedPhotos';
 import UserDetailedSidebar from './UserDetailedSidebar';
 import UserDetailedEvents from './UserDetailedEvents';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { getUserEvents } from '../userActions';
 
 const query = ({auth}) => {
   return [
@@ -21,11 +23,24 @@ const query = ({auth}) => {
   ]
 };
 
-const mapState = (state) => ({
-  profile: state.firebase.profile,
-  auth: state.firebase.auth,
-  photos: state.firestore.ordered.photos
-});
+const mapState = (state, ownProps) => {
+  let userUid = null;
+  let profile = {};
+
+  return {
+    profile,
+    userUid,
+    events: state.events,
+    eventsLoading: state.async.loading,
+    auth: state.firebase.auth,
+    photos: state.firestore.ordered.photos,
+    requesting: state.firestore.status.requesting
+  }
+};
+
+const actions = {
+  getUserEvents
+};
 
 class UserDetailedPage extends Component {
   render(){
@@ -47,5 +62,5 @@ class UserDetailedPage extends Component {
 
 export default compose(
   connect(mapState),
-  firestoreConnect(auth => query(auth))
+  firestoreConnect((auth, userUid) => userDetailedQuery(auth, userUid))
 )(UserDetailedPage);

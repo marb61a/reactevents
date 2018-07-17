@@ -177,3 +177,13 @@ export const cancelGoingToEvent = (event) => {
     }
   }
 }
+
+export const getUserEvents = () => {
+  return async(dispatch, getState, { getFirestore }) => {
+    dispatch(asyncActionStart());
+    const firestore = firebase.firestore();
+    const today = new Date(Date.now());
+    let eventsRef = firestore.collection('event_attendee');
+    let query;
+  }
+}
