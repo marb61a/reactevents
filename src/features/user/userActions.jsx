@@ -151,10 +151,29 @@ export const goingToEvent = (event) => {
         host: false
       });
 
-      toastr.success('Congratulations', 'You have signed up to th event');
+      toastr.success('Congratulations', 'You have signed up to the event');
     } catch(error){
       console.log(error);
       toastr.error('Oops', 'There was a problem signing up to the event');
     }
   }
 };
+
+export const cancelGoingToEvent = (event) => {
+  return async(dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    const user = firestore.auth().currentUser;
+
+    try{
+      await firestore.update(`events/${event.id}`, {
+        [`attendees.${user.uid}`]: firestore.FieldValue.delete()
+      });
+      await firestore.delete(`event_attendee/${event.id}_${user.uid}`);
+
+      toastr.success('Congratulations', 'You have unsigned from the event');
+    } catch(error){
+      console.log(error);
+      toastr.error('Oops', 'There was a problem');
+    }
+  }
+}

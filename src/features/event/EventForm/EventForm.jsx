@@ -1,7 +1,7 @@
 /*global google*/
 
 import React, { Component } from 'react';
-import { Segment, Form, Button, Grid } from 'semantic-ui-react';
+import { Segment, Form, Button, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withFirestore } from 'react-redux-firebase';
 import { reduxForm, Field } from 'redux-form';
@@ -18,8 +18,8 @@ import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
 import PlaceInput from '../../../app/common/form/PlaceInput';
 
-const mapState = (state) => {
-  let event = {}
+const mapState = (state, ownProps) => {
+  let event = {};
 
   if(state.firestore.ordered.events && state.firestore.ordered.events[0]){
     event = state.firestore.ordered.events[0];
@@ -28,7 +28,7 @@ const mapState = (state) => {
   return {
     initialValues: event,
     event
-  }
+  };
 };
 
 const actions = {
@@ -63,7 +63,7 @@ class EventForm extends Component {
     cityLatLng: {},
     venueLatLng: {},
     scriptLoaded: false
-  }
+  };
 
   async componentDidMount(){
     const { firestore, match } = this.props;
@@ -79,7 +79,7 @@ class EventForm extends Component {
     scriptLoaded: true
   });
 
-  handleCitySelect = (selectedCity) => {
+  handleCitySelect = selectedCity => {
     geocodeByAddress(selectedCity)
       .then(results => getLatLng(results[0]))
       .then(latlng => {
@@ -89,10 +89,10 @@ class EventForm extends Component {
       })
       .then(() => {
         this.props.change('city', selectedCity)
-      })
-  } 
+      });
+  };
 
-  handleVenueSelect = (selectedVenue) => {
+  handleVenueSelect = selectedVenue => {
     geocodeByAddress(selectedVenue)
       .then(results => getLatLng(results[0]))
       .then(latlng => {
@@ -102,8 +102,8 @@ class EventForm extends Component {
       })
       .then(() => {
         this.props.change('venue', selectedVenue);
-      })
-  } 
+      });
+  };
 
   onFormSubmit = values => {
     values.venueLatLng = this.state.venueLatLng;
@@ -131,6 +131,7 @@ class EventForm extends Component {
           onLoad={this.handleScriptLoaded}
         />
         <Grid.Column width={10}>
+          <Header sub color="teal" content="Event Details" />
           <Segment>
             <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
               <Field 
@@ -161,29 +162,29 @@ class EventForm extends Component {
                 placeholder='Event City'
                 onSelect={this.handleCitySelect}
               />
-              <Field 
-                name='venue'
-                type='text'
-                component={PlaceInput}
-                options={{
-                  location: new google.maps.LatLng(this.state.cityLatLng),
-                  radius: 1000,
-                  types: ['establishment']
-                }}
-                placeholder='Event Venue'
-                onSelect={this.handleVenueSelect}
-              />
               { this.state.scriptLoaded &&
                 <Field 
-                  name='date'
+                  name='venue'
                   type='text'
-                  component={DateInput}
-                  dateFormat='YYYY-MM-DD HH:mm'
-                  timeFormat='HH:mm'
-                  showTimeSelect
-                  placeholder='Date and Time of event'
+                  component={PlaceInput}
+                  options={{
+                    location: new google.maps.LatLng(this.state.cityLatLng),
+                    radius: 1000,
+                    types: ['establishment']
+                  }}
+                  placeholder='Event Venue'
+                  onSelect={this.handleVenueSelect}
                 />
               }
+              <Field 
+                name='date'
+                type='text'
+                component={DateInput}
+                dateFormat='YYYY-MM-DD HH:mm'
+                timeFormat='HH:mm'
+                showTimeSelect
+                placeholder='Date and Time of event'
+              />
               <Button 
                 disabled={invalid || submitting || pristine}
                 positive 
