@@ -21,7 +21,12 @@ export const fetchEvents = (events) => {
 };
 
 export const createEvent = (event) => {
-  return async dispatch => {
+  return async ( dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    const user = firestore.auth().currentUser;
+    const photoURL = getState().firebase.profile.photoURL;
+    let newEvent = createNewEvent(user, photoURL, event);
+
     try {
       dispatch({
         type: CREATE_EVENT,
@@ -29,7 +34,6 @@ export const createEvent = (event) => {
           event
         }
       });
-
       toastr.success('Success', 'An event has been created');
     } catch(err){
       toastr.error('Oops', 'Something went wrong');
