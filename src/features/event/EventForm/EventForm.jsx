@@ -7,18 +7,16 @@ import { withFirestore } from 'react-redux-firebase';
 import { reduxForm, Field } from 'redux-form';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Script from 'react-load-script';
-import moment from 'moment';
 import {
   composeValidators, combineValidators, isRequired, hasLengthGreaterThan 
 } from 'revalidate';
  
-import { createEvent, updateEvent } from '../eventActions';
+import { createEvent, updateEvent, cancelToggle } from '../eventActions';
 import TextInput from '../../../app/common/form/TextInput';
 import TextArea from '../../../app/common/form/TextArea';
 import SelectInput from '../../../app/common/form/SelectInput';
 import DateInput from '../../../app/common/form/DateInput';
 import PlaceInput from '../../../app/common/form/PlaceInput';
-import cancelToggle from '../eventActions';
 
 const mapState = (state) => {
   let event = {}
@@ -69,8 +67,13 @@ class EventForm extends Component {
 
   async componentDidMount(){
     const { firestore, match } = this.props;
-    await firestore.get(`events/${match.params.id}`);
-  }
+    await firestore.setListener(`events/${match.params.id}`);
+  };
+
+  async componentWillUnmount(){
+    const { firestore, match } = this.props;
+    await firestore.unsetListener(`events/${match.params.id}`);
+  };
 
   handleScriptLoaded = () => this.setState({
     scriptLoaded: true
@@ -106,6 +109,10 @@ class EventForm extends Component {
     values.venueLatLng = this.state.venueLatLng;
 
     if(this.props.initialValues.id){
+      if(Object.keys(values.venueLatLng).length === 0){
+        values.venueLatLng = this.props.event.venueLatLng;
+      }
+
       this.props.updateEvent(values);
       this.props.history.goBack();
     } else {    

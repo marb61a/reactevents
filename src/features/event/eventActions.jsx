@@ -1,7 +1,7 @@
 import {toastr} from 'react-redux-toastr';
 import moment from 'moment';
 
-import { UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS } from './eventConstants';
+import { DELETE_EVENT, FETCH_EVENTS } from './eventConstants';
 import { 
   asyncActionStart, asyncActionFinish, asyncActionError 
 } from '../async/asyncActions';

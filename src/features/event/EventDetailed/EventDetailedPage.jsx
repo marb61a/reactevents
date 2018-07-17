@@ -9,6 +9,7 @@ import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedChat from './EventDetailedChat';
 import EventDetailedSidebar from './EventDetailedSidebar';
 import { objectToArray } from '../../../app/common/util/helpers';
+import { goingToEvent, cancelGoingToEvent } from '../../user/userActions';
 
 const mapState = (state) => {
   let event = {};
@@ -18,29 +19,43 @@ const mapState = (state) => {
   }
 
   return {
-    event
+    event,
+    auth: state.firebase.auth
   };
 }
 
+const actions = {
+  goingToEvent,
+  cancelGoingToEvent
+};
+
 class EventDetailedPage extends Component {
   async componentDidMount(){
-    const { firestore, match, history } = this.props;
-    let event = await firestore.get(`events/${match.params.id}`);
-    
-    if(!event.exists){
-      history.push('/events');
-      toastr.error('Sorry', 'No event found');
-    }
+    const { firestore, match } = this.props;
+    await firestore.setListener(`events/${match.params.id}`);
+  };
+
+  async componentWillUnmount() {
+    const { firestore, match } = this.props;
+    await firestore.unsetListener(`events/${match.params.id}`);
   };
 
   render() {
-    const { event } = this.props;
+    const { event, auth, goingToEvent, cancelGoingToEvent  } = this.props;
     const attendees = event && event.attendees && objectToArray(event.attendees);
+    const isHost = event.hostUid === auth.uid;
+    const isGoing = attendees && attendees.some(a => a.id === auth.uid);
 
     return (
       <Grid>
         <Grid.Column width={10}>
-          <EventDetailedHeader event={event}/>
+          <EventDetailedHeader 
+            event={event}
+            isHost={isHost}
+            isGoing={isGoing}
+            goingToEvent={goingToEvent}
+            cancelGoingToEvent={cancelGoingToEvent}
+          />
           <EventDetailedInfo event={event} />
           <EventDetailedChat />
         </Grid.Column>
