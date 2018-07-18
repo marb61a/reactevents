@@ -66,4 +66,4 @@ class EventDetailedPage extends Component {
   }
 }
 
-export default withFirestore(connect(mapState)(EventDetailedPage));
+export default withFirestore(connect(mapState,actions)(EventDetailedPage));

@@ -1,7 +1,7 @@
 import { SubmissionError, reset } from 'redux-form';
 import { toastr } from 'react-redux-toastr';
+
 import { closeModal } from '../modals/modalActions';
-import { getFirestore } from 'redux-firestore';
 
 export const login = creds => {
   return async (dispatch, getState, { getFirebase }) => {

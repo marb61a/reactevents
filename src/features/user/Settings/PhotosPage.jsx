@@ -32,7 +32,7 @@ const actions = {
 const mapState = state => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
-  photos: state.firebase.ordered.photos,
+  photos: state.firestore.ordered.photos,
   loading: state.async.loading
 });
 
@@ -132,7 +132,7 @@ class PhotosPage extends Component {
           <Grid.Column width={1} />
           <Grid.Column width={4}>
             <Header sub color='teal' content='Step 2 - Resize image' />
-            {this.state.files[0] &&
+            {this.state.files[0] && (
               <Cropper 
                 style={{height: 200, width: '100%'}}
                 ref='cropper'
@@ -146,6 +146,7 @@ class PhotosPage extends Component {
                 cropBoxResizable={true}
                 crop={this.cropImage}
               />
+              )
             }
           </Grid.Column>
           <Grid.Column width={1} />
