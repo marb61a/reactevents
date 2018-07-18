@@ -62,8 +62,9 @@ class EventDashboard extends Component {
 
   render() {
     const { loading } = this.props;
+    const { moreEvents, loadedEvents } = this.state;
 
-    if(SVGAnimatedLengthList.state.loadingInitial) {
+    if(this.state.loadingInitial) {
       return <LoadingComponent inverted={true} />
     };
 

@@ -54,13 +54,6 @@ class EventListItem extends Component {
             {event.description}
           </span>
           <Button 
-            onClick={deleteEvent(event.id)} 
-            as="a" 
-            color="red" 
-            floated="right" 
-            content="Delete" 
-          />
-          <Button 
             as={Link}
             to={`/event/${event.id}`} 
             color="teal" 

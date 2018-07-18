@@ -180,7 +180,7 @@ export const cancelGoingToEvent = (event) => {
   }
 }
 
-export const getUserEvents = () => {
+export const getUserEvents = (userUid, activeTab) => {
   return async(dispatch, getState, { getFirestore }) => {
     dispatch(asyncActionStart());
     const firestore = firebase.firestore();
