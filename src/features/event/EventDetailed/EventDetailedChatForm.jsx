@@ -3,7 +3,6 @@ import { Form, Button } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
 
 import TextArea from '../../../app/common/form/TextArea';
-import { __values } from 'tslib';
 
 class EventDetailedChatForm extends Component {
   handleCommentSubmit = values => {
