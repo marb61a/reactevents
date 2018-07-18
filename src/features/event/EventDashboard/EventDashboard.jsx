@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
@@ -9,7 +9,7 @@ import LoadingComponent from '../../../app/layout/LoadingComponent';
 import EventActivity from '../EventActivity/EventActivity';
 
 const mapState = (state) => ({
-  events: state.firestore.ordered.events,
+  events: state.events,
   loading: state.async.loading
 });
 
