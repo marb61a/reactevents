@@ -190,13 +190,28 @@ export const getUserEvents = () => {
 
     switch(activeTab){
       case 1: // past events
+        query = eventsRef
+          .where('userUid', '==', userUid)
+          .where('eventDate', '<=', today)
+          .orderBy('eventDate', 'desc');
         break;
       case 2: // future events
+        query = eventsRef
+          .where('userUid', '==', userUid)
+          .where('eventDate', '>=', today)
+          .orderBy('eventDate');
         break;
       case 3: // hosted events
+        query = eventsRef
+          .where('userUid', '==', userUid)
+          .where('host', '==', true)
+          .orderBy('eventDate', 'desc');
         break;
       default:
-    }
+        query = eventsRef
+          .where('userUid', '==', userUid)
+          .orderBy('eventDate', 'desc');
+    };
     
     try{
       let querySnap = await query.get();
