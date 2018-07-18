@@ -27,4 +27,8 @@ export const createNewEvent = (user, photoURL, event) => {
       }
     }
   }
+};
+
+export const createDataTree = dataset => {
+  
 }
