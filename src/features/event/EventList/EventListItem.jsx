@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
 
 import EventListAttendee from './EventListAttendee';
+import { objectToArray } from '../../../app/common/util/helpers'
 
 class EventListItem extends Component {
   render() {
-    const { event, deleteEvent } = this.props;
+    const { event} = this.props;
 
     return (
       <Segment.Group>
@@ -16,9 +17,14 @@ class EventListItem extends Component {
             <Item>
               <Item.Image size="tiny" circular src={event.hostPhotoURL} />
               <Item.Content>
-                <Item.Header as="a">{event.title}</Item.Header>
+                <Item.Header as={Link} to={`/event/${event.id}`} >
+                  {event.title}
+                </Item.Header>
                 <Item.Description>
-                  Hosted by <a>{event.hostedBy}</a>
+                  Hosted by 
+                  <Link to={`/profile/${event.hostUid}`}>
+                    {event.hostedBy}
+                  </Link>
                 </Item.Description>
                 { event.cancelled && 
                   <Label 
