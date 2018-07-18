@@ -70,7 +70,7 @@ export const cancelToggle = (cancelled, eventId) => {
   }
 }
 
-export const getEventsFromDashboard = lastEvent => {
+export const getEventsForDashboard = lastEvent => {
   return async(dispatch, getState) => {
     let today = new Date(Date.now());
     const firestore = firebase.firestore();

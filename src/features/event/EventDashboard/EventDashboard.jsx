@@ -3,8 +3,8 @@ import { Grid, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 
+import { getEventsForDashboard } from '../eventActions';
 import EventList from '../EventList/EventList';
-import { deleteEvent } from '../eventActions';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import EventActivity from '../EventActivity/EventActivity';
 
@@ -14,12 +14,40 @@ const mapState = (state) => ({
 });
 
 const actions = {
-  deleteEvent
+  getEventsForDashboard
 };
 
 class EventDashboard extends Component {
-  handleDeleteEvent = eventId => () => {
-    this.props.deleteEvent(eventId);
+  state ={
+    moreEvents: false,
+    loadingInitial: true,
+    loadedEvents: []
+  }
+
+  async componentDidMount(){
+    let next = await this.props.getEventsForDashboard();
+    console.log(next);
+
+    if(next && next.docs && next.docs.length > 1){
+      this.setState({
+        moreEvents: true,
+        loadingInitial: false
+      });
+    }
+  };
+
+  // Prevents rerendering all events when scrolling
+  componentWillReceiveProps(nextProps){
+    if(this.props.events !== nextProps.events){
+      this.setState({
+        loadedEvents: [...this.state.loadedEvents, ...nextProps.events]
+      });
+    }
+  };
+
+  getNextEvents = async() => {
+    const { events } = this.props;
+    
   }
 
   render() {
