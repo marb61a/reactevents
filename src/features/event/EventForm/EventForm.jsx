@@ -27,7 +27,8 @@ const mapState = (state, ownProps) => {
 
   return {
     initialValues: event,
-    event
+    event,
+    loading: state.async.loading
   };
 };
 
@@ -56,7 +57,7 @@ const validate = combineValidators({
   city: isRequired('city'),
   venue: isRequired('venue'),
   date: isRequired('date')
-})
+});
 
 class EventForm extends Component {
   state = {
@@ -122,12 +123,14 @@ class EventForm extends Component {
   };
 
   render() {
-    const {invalid, submitting, pristine, event, cancelToggle} = this.props;
+    const {
+      invalid, submitting, pristine, event, cancelToggle, loading
+    } = this.props;
 
     return (
       <Grid>
         <Script 
-          url='https://maps.googleapis.com/maps/api/js?key=-&libraries=places'
+          url='https://maps.googleapis.com/maps/api/js?key=--&libraries=places'
           onLoad={this.handleScriptLoaded}
         />
         <Grid.Column width={10}>
@@ -186,6 +189,7 @@ class EventForm extends Component {
                 placeholder='Date and Time of event'
               />
               <Button 
+                loading={loading}
                 disabled={invalid || submitting || pristine}
                 positive 
                 type="submit"
@@ -193,6 +197,7 @@ class EventForm extends Component {
                 Submit
               </Button>
               <Button 
+                disabled={loading}
                 onClick={this.props.history.goBack} 
                 type="button"
               >
