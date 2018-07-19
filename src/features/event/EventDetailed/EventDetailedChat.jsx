@@ -11,8 +11,23 @@ class EventDetailedChat extends Component{
     selectedCommentId: null
   };
 
+  handleOpenReplyForm = id => () => {
+    this.setState({
+      showReplyForm: true,
+      selectedCommentId: id
+    });
+  };
+
+  handleCloseReplyForm = () => {
+    this.setState({
+      selectedCommentId: null,
+      showReplyForm: false
+    });
+  };
+
   render(){
     const { addEventComment, eventId, eventChat } = this.props;
+    const { showReplyForm, selectedCommentId } = this.state;
 
     return(
       <div>
@@ -70,6 +85,12 @@ class EventDetailedChat extends Component{
               ))
             }
           </Comment.Group>
+          <EventDetailedChatForm 
+            parentId={0}
+            form={'newComment'}
+            addEventComment={addEventComment}
+            eventId={eventId}
+          />
         </Segment>
       </div>
     );
