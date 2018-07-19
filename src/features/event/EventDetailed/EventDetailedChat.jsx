@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Segment, Header, Comment } from 'semantic-ui-react';
 import distanceInWords from 'date-fns/distance_in_words';
+import { Link } from 'react-router-dom';
 
 import EventDetailedChatForm from './EventDetailedChatForm';
-import { Link } from 'react-router-dom';
 
 class EventDetailedChat extends Component{
   state = {
@@ -33,6 +33,39 @@ class EventDetailedChat extends Component{
                   <Comment.Avatar 
                     src={comment.photoURL || '/assets/user.png'} 
                   />
+                  <Comment.Content>
+                    <Comment.Author as={Link} to={`/profile/${comment.uid}`}>
+                      {comment.displayName}
+                    </Comment.Author>
+                    <Comment.Metadata>
+                      <div>{distanceInWords(comment.date, Date.now())} ago</div>
+                    </Comment.Metadata>
+                    <Comment.Text>{comment.text}</Comment.Text>
+                    <Comment.Actions>
+                      <Comment.Action 
+                        onClick={this.handleOpenReplyForm(comment.id)}
+                      >
+                        Reply
+                      </Comment.Action>
+                      {showReplyForm &&
+                        selectedCommentId === comment.id && (
+                          <EventDetailedChatForm
+                            form={`reply_${comment.id}`}
+                            addEventComment={addEventComment}
+                            eventId={eventId}
+                            closeForm={this.handleCloseReplyForm}
+                            parentId={comment.id}
+                          />
+                        )}
+                    </Comment.Actions>
+                  </Comment.Content>
+                  {comment.childNodes &&
+                    comment.childNodes.map(child => (
+                      <Comment.Group>
+                      
+                      </Comment.Group>
+                    ))
+                  }
                 </Comment>
               ))
             }
