@@ -6,7 +6,7 @@ import {
   FETCH_EVENTS 
 } from './eventConstants';
 
- const initialState = [];
+const initialState = [];
 
 export const createEvent = (state, payload) => {
   return [
@@ -25,7 +25,7 @@ export const updateEvent = (state, payload) => {
 export const deleteEvent = (state, payload) => {
   return [
     ...state.filter(event => event.id !== payload.eventId)
-  ]
+  ];
 };
 
 export const fetchEvents = (state, payload) => {

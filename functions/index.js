@@ -49,4 +49,21 @@ exports.createActivity = functions.firestore.document('events/{eventId}')
         === previousEventData.cancelled) {
         return false;
       }
-    })
+
+      const activity = newActivity('cancelledEvent', updatedEvent, 
+        context.params.eventId);
+      console.log({ activity });
+
+      return admin
+        .firestore()
+        .collection('activity')
+        .add(activity)
+        .then(docRef => {
+          return console.log('Activity created with id: ', docRef.id);
+        })
+        .catch(err => {
+          return console.log('Error adding activity', err);
+        });
+    });
+
+    
