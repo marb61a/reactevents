@@ -77,7 +77,38 @@ class EventDetailedChat extends Component{
                   {comment.childNodes &&
                     comment.childNodes.map(child => (
                       <Comment.Group>
-                      
+                        <Comment key={child.id}>
+                          <Comment.Avatar 
+                            src={child.photoURL || '/assets/user.png'} 
+                          />
+                          <Comment.Author as={Link} to={`/profile/${child.uid}`}>
+                            {child.displayName}
+                          </Comment.Author>
+                          <Comment.Metadata>
+                            <div>
+                              {distanceInWords(comment.date, Date.now())} ago
+                            </div>
+                          </Comment.Metadata>
+                          <Comment.Text>{comment.text}</Comment.Text>
+                          <Comment.Actions>
+                            <Comment.Action
+                              onClick={this.handleOpenReplyForm(comment.id)}
+                            >
+                              Reply
+                            </Comment.Action>
+                            {showReplyForm &&
+                              selectedCommentId === comment.id && (
+                                <EventDetailedChatForm 
+                                  form={`reply_${comment.id}`}
+                                  addEventComment={addEventComment}
+                                  eventId={eventId}
+                                  closeForm={this.handleCloseReplyForm}
+                                  parentId={comment.id}
+                                />
+                              )
+                            }
+                          </Comment.Actions>
+                        </Comment>
                       </Comment.Group>
                     ))
                   }
