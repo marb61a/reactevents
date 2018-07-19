@@ -42,7 +42,7 @@ const EventDetailedHeader = ({
                   content={event.title}
                   style={{ color: 'white' }}
                 />
-                <p>{format(eventDate, 'DDDD Do MMMM')}</p>
+                <p>{format(eventDate, 'dddd Do MMMM')}</p>
                 <p>
                   Hosted by <strong>{event.hostedBy}</strong>
                 </p>
@@ -52,7 +52,7 @@ const EventDetailedHeader = ({
         </Segment>
       </Segment>
       <Segment attached="bottom">
-        { isHost && (
+        { !isHost && (
           <div>
           {isGoing ? (
             <Button onClick={() => cancelGoingToEvent(event)}>
@@ -65,6 +65,7 @@ const EventDetailedHeader = ({
           )}
           </div>
         )}
+        
         { isHost && (
           <Button
             as={Link}

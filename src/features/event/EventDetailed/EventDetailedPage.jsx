@@ -12,7 +12,7 @@ import { objectToArray, createDataTree } from '../../../app/common/util/helpers'
 import { goingToEvent, cancelGoingToEvent } from '../../user/userActions';
 import { addEventComment } from '../eventActions';
 
-const mapState = (state) => {
+const mapState = (state, ownProps) => {
   let event = {};
 
   if(state.firestore.ordered.events && state.firestore.ordered.events[0]){
@@ -21,9 +21,12 @@ const mapState = (state) => {
 
   return {
     event,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    eventChat:
+      !isEmpty(state.firebase.data.event_chat) &&
+      objectToArray(state.firebase.data.event_chat[ownProps.match.params.id])
   };
-}
+};
 
 const actions = {
   goingToEvent,
