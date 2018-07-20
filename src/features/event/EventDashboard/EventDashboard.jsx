@@ -60,17 +60,17 @@ class EventDashboard extends Component {
 
     let next = await this.props.getEventsForDashboard(lastEvent);
 
-    if(next && next.docs & next.docs.length <= 1){
+    if(next && next.docs && next.docs.length <= 1){
       this.setState({
         moreEvents: false
       });
     }
   };
 
-  handleContextRef = contextRef => this.setState({contextRef})
+  handleContextRef = contextRef => this.setState({contextRef});
 
   render() {
-    const { loading } = this.props;
+    const { loading, activities } = this.props;
     const { moreEvents, loadedEvents } = this.state;
 
     if(this.state.loadingInitial) {
@@ -90,7 +90,10 @@ class EventDashboard extends Component {
           </div>
         </Grid.Column>
         <Grid.Column width={6}>
-          <EventActivity />
+          <EventActivity 
+            activities={activities}
+            contextRef={this.state.contextRef}
+          />
         </Grid.Column>
         <Grid.Column width={10}>
           <Loader active={loading}/>
