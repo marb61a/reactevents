@@ -35,35 +35,35 @@ exports.createActivity = functions.firestore.document('events/{eventId}')
       });
   });
 
-  exports.cancelActivity = functions.firestore.document('events/{eventId}')
-    .onUpdate((event, constext) => {
-      let updatedEvent = event.after.data();
-      let previousEvent = event.before.data();
+exports.cancelActivity = functions.firestore.document('events/{eventId}')
+  .onUpdate((event, constext) => {
+    let updatedEvent = event.after.data();
+    let previousEvent = event.before.data();
 
-      console.log({ event });
-      console.log({ context });
-      console.log({ updatedEvent });
-      console.log({ previousEventData });
+    console.log({ event });
+    console.log({ context });
+    console.log({ updatedEvent });
+    console.log({ previousEventData });
 
-      if (!updatedEvent.cancelled || updatedEvent.cancelled 
-        === previousEventData.cancelled) {
-        return false;
-      }
+    if (!updatedEvent.cancelled || updatedEvent.cancelled 
+      === previousEventData.cancelled) {
+      return false;
+    }
 
-      const activity = newActivity('cancelledEvent', updatedEvent, 
-        context.params.eventId);
-      console.log({ activity });
+    const activity = newActivity('cancelledEvent', updatedEvent, 
+      context.params.eventId);
+    console.log({ activity });
 
-      return admin
-        .firestore()
-        .collection('activity')
-        .add(activity)
-        .then(docRef => {
-          return console.log('Activity created with id: ', docRef.id);
-        })
-        .catch(err => {
-          return console.log('Error adding activity', err);
-        });
-    });
+    return admin
+      .firestore()
+      .collection('activity')
+      .add(activity)
+      .then(docRef => {
+        return console.log('Activity created with id: ', docRef.id);
+      })
+      .catch(err => {
+        return console.log('Error adding activity', err);
+      });
+  });
 
     
