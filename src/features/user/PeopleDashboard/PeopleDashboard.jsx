@@ -2,24 +2,25 @@ import React  from 'react';
 import { Grid, Segment, Header, Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { firestoreConnect } from 'react-redux-firebase'
+
+import { firestoreConnect } from 'react-redux-firebase';
 import PersonCard from './PersonCard';
 
 const query = ({auth}) => {
-    return [
-      {
-        collection: 'users',
-        doc: auth.uid,
-        subcollections: [{collection: 'following'}],
-        storeAs: 'following'
-      },
-      {
-        collection: 'users',
-        doc: auth.uid,
-        subcollections: [{collection: 'followers'}],
-        storeAs: 'followers'
-      }
-    ]
+  return [
+    {
+      collection: 'users',
+      doc: auth.uid,
+      subcollections: [{collection: 'following'}],
+      storeAs: 'following'
+    },
+    {
+      collection: 'users',
+      doc: auth.uid,
+      subcollections: [{collection: 'followers'}],
+      storeAs: 'followers'
+    }
+  ]
 };
 
 const mapState = state => ({
@@ -28,10 +29,27 @@ const mapState = state => ({
   auth: state.firebase.auth
 });
 
-const PeopleDashboard = () => {
+const PeopleDashboard = ({following, followers}) => {
   return (
     <Grid>
-    
+      <Grid.Column width={16}>
+        <Segment>
+          <Header dividing content="People following me" />
+          <Card.Group itemsPerRow={8} stackable>
+            {followers && followers.map(follower => (
+              <PersonCard key={follower.id} user={follower}/>
+            ))}
+          </Card.Group>
+        </Segment>
+        <Header dividing content="People I'm following" />
+        <Segment itemsPerRow={8} stackable>
+          <Card.Group>
+            {followers && followings.map(following => (
+              <PersonCard key={following.id} user={following} />
+            ))}
+          </Card.Group>
+        </Segment>
+      </Grid.Column>
     </Grid>
   );
 } 
