@@ -6,7 +6,7 @@ import {
   asyncActionStart, asyncActionFinish, asyncActionError
 } from '../async/asyncActions';
 import firebase from '../../app/config/firebase';
-import { FETCH_EVENTS } from '../event/eventConstants'
+import { FETCH_EVENTS } from '../event/eventConstants';
 
 export const updateProfile = (user) => {
   return async(dispatch, getState, { getFirebase }) => {
@@ -113,8 +113,11 @@ export const deletePhoto = (photo) => {
 
 // Allow users to set main image
 export const setMainPhoto = photo => {
-  return async (dispatch, getState, {getFirebase}) => {
-    const firebase = getFirebase();
+  return async (dispatch, getState) => {
+    dispatch(asyncActionStart())
+    const firestore = firebase.firestore();
+    const user = firebase.auth().currentUser;
+    const today = new Date(Date.now());
 
     try {
       return await firebase.updateProfile({
