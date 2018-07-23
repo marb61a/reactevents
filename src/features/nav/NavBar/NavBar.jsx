@@ -9,7 +9,7 @@ import SignedInMenu from '../Menus/SignedInMenu';
 import { openModal } from '../../modals/modalActions';
 
 const actions = {
-  openModal,
+  openModal
 };
 
 const mapState = (state) => ({
@@ -62,6 +62,7 @@ class NavBar extends Component {
           </Menu.Item> }
           {authenticated 
             ? ( <SignedInMenu 
+                auth={auth}
                 profile={profile}
                 signOut={this.handleSignOut} 
               /> )
@@ -69,8 +70,7 @@ class NavBar extends Component {
                 signIn={this.handleSignIn} 
                 register={this.handleRegister}
               /> )
-           }
-          
+           }      
         </Container>
       </Menu>
     );

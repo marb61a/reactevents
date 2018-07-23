@@ -81,33 +81,35 @@ class EventDetailedChat extends Component{
                           <Comment.Avatar 
                             src={child.photoURL || '/assets/user.png'} 
                           />
+                          <Comment.Content>
                           <Comment.Author as={Link} to={`/profile/${child.uid}`}>
                             {child.displayName}
                           </Comment.Author>
                           <Comment.Metadata>
                             <div>
-                              {distanceInWords(comment.date, Date.now())} ago
+                              {distanceInWords(child.date, Date.now())} ago
                             </div>
                           </Comment.Metadata>
-                          <Comment.Text>{comment.text}</Comment.Text>
-                          <Comment.Actions>
-                            <Comment.Action
-                              onClick={this.handleOpenReplyForm(comment.id)}
-                            >
-                              Reply
-                            </Comment.Action>
-                            {showReplyForm &&
-                              selectedCommentId === comment.id && (
-                                <EventDetailedChatForm 
-                                  form={`reply_${comment.id}`}
-                                  addEventComment={addEventComment}
-                                  eventId={eventId}
-                                  closeForm={this.handleCloseReplyForm}
-                                  parentId={comment.id}
-                                />
-                              )
-                            }
-                          </Comment.Actions>
+                          <Comment.Text>{child.text}</Comment.Text>
+                            <Comment.Actions>
+                              <Comment.Action
+                                onClick={this.handleOpenReplyForm(child.id)}
+                              >
+                                Reply
+                              </Comment.Action>
+                              {showReplyForm &&
+                                selectedCommentId === child.id && (
+                                  <EventDetailedChatForm 
+                                    form={`reply_${comment.id}`}
+                                    addEventComment={addEventComment}
+                                    eventId={eventId}
+                                    closeForm={this.handleCloseReplyForm}
+                                    parentId={child.parentId}
+                                  />
+                                )
+                              }
+                            </Comment.Actions>
+                          </Comment.Content>
                         </Comment>
                       </Comment.Group>
                     ))

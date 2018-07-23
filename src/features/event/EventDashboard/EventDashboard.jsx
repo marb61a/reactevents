@@ -27,7 +27,7 @@ const actions = {
 };
 
 class EventDashboard extends Component {
-  state ={
+  state = {
     moreEvents: false,
     loadingInitial: true,
     loadedEvents: [],

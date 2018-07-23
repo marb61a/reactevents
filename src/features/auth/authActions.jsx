@@ -15,7 +15,7 @@ export const login = creds => {
     } catch(error){
       console.log(error);
       throw new SubmissionError({
-        _error: error.message
+        _error: 'Login Failed'
       });
     }
   };

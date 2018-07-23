@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Feed} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 class EventActivityItem extends Component {
   renderSummary = (activity) => {
@@ -29,7 +29,7 @@ class EventActivityItem extends Component {
             <Feed.User 
               as={Link} to={{pathname: '/profile/' + activity.hostUid}}
             >
-              {activity.hostedByDisplayName}
+              {activity.hostedBy}
             </Feed.User> {' '}
             has cancelled {' '}
             <Link to={{pathname: '/event/' + activity.eventId}}>
@@ -56,7 +56,7 @@ class EventActivityItem extends Component {
           </Feed.Summary>
           <Feed.Meta>
             <Feed.Date>
-              {distanceInWordsToNow(activity.timestamp)} ago
+              {distanceInWordsToNow(activity.timestamp.toDate())} ago
             </Feed.Date>
           </Feed.Meta>
         </Feed.Content>
