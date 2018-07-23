@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Image, Item, Button, Header } from 'semantic-ui-react';
+import { Segment, Image, Item, Button, Header, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
 
@@ -17,7 +17,8 @@ const eventImageTextStyle = {
 };
 
 const EventDetailedHeader = ({
-  event, isHost, isGoing, goingToEvent, cancelGoingToEvent
+  openModal, authenticated, loading, event, isHost, isGoing, 
+  goingToEvent, cancelGoingToEvent
 }) => {
   let eventDate;
 
@@ -78,6 +79,6 @@ const EventDetailedHeader = ({
       </Segment>
     </Segment.Group>
   );
-}
+};
 
 export default EventDetailedHeader;

@@ -49,7 +49,10 @@ class EventDetailedPage extends Component {
     const { firestore, match } = this.props;
     let event = await firestore.get(`events/${match.params.id}`);
 
-
+    if (!event.exists) {
+      toastr.error('Not found', 'This is not the event you are looking for');
+      this.props.history.push('/error');
+    };
 
     await firestore.setListener(`events/${match.params.id}`);
 
@@ -75,7 +78,7 @@ class EventDetailedPage extends Component {
     
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
-    const chatTree = !isEmpty(eventChat) && createDataTree(eventChat)
+    const chatTree = !isEmpty(eventChat) && createDataTree(eventChat);
     const authenticated = auth.isLoaded && !auth.isEmpty;
     const loadingEvent = requesting[`events/${match.params.id}`]
 
@@ -88,17 +91,22 @@ class EventDetailedPage extends Component {
         <Grid.Column width={10}>
           <EventDetailedHeader 
             event={event}
+            loading={loading}
             isHost={isHost}
             isGoing={isGoing}
             goingToEvent={goingToEvent}
             cancelGoingToEvent={cancelGoingToEvent}
+            authenticated={authenticated}
+            openModal={openModal}
           />
           <EventDetailedInfo event={event} />
-          <EventDetailedChat 
-            eventChat={chatTree}
-            addEventComment={addEventComment}
-            eventId={event.id}
-          />
+          {authenticated &&
+            <EventDetailedChat 
+              eventChat={chatTree}
+              addEventComment={addEventComment}
+              eventId={event.id}
+            />
+          }
         </Grid.Column>
         <Grid.Column width={6}>
           <EventDetailedSidebar attendees={attendees} />
