@@ -64,7 +64,7 @@ class BasicPage extends Component {
       </Segment>
     );
   }
-}
+};
 
 export default reduxForm({
   form: 'userProfile', 

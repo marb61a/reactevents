@@ -26,6 +26,6 @@ class LoginModal extends Component {
       </Modal>
     );
   }
-}
+};
 
 export default connect(null, actions)(LoginModal);

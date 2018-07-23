@@ -24,6 +24,6 @@ const SettingsNav = () => {
         </Menu>
       </Grid.Column>
     );
-}
+};
 
 export default SettingsNav;

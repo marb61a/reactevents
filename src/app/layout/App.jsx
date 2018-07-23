@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Container } from 'semantic-ui-react';
 import { Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import LoadingComponent from './LoadingComponent';
 
+import LoadingComponent from './LoadingComponent';
 import { UserIsAuthenticated } from '../../features/auth/authWrapper';
 
 const AsyncHomePage = Loadable({
@@ -87,6 +87,6 @@ class App extends Component {
       </div>
     );
   }
-}
+};
 
 export default App;

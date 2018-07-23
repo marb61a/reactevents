@@ -25,7 +25,7 @@ const query = ({auth}) => {
 
 const actions = {
   uploadProfileImage,
-  deletePhoto, 
+  deletePhoto,
   setMainPhoto
 };
 
@@ -61,7 +61,6 @@ class PhotosPage extends Component {
       this.cancelCrop();
       toastr.success('Success', 'Your image has been uploaded');
     } catch(error){
-      console.log(error);
       toastr.error('Oops', error.message);
     }
   };
@@ -72,15 +71,15 @@ class PhotosPage extends Component {
     } catch (error) {
       toastr.error('Oops', error.message)
     }
-  }
+  };
 
   handleSetMainPhoto = (photo) => async () => {
     try {
-      this.props.setMainPhoto(photo);
+      await this.props.setMainPhoto(photo);
     } catch (error) {
       toastr.error('Oops', error.message)
     }
-  }
+  };
 
   cropImage = () => {
     // Accessing the refs, if there is no image to crop then just return

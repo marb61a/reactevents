@@ -20,7 +20,7 @@ import TextInput from '../../../app/common/form/TextInput';
 
 const validate = combineValidators({
   newPassword1: isRequired({message: 'Please enter a password'}),
-  newPassword2: combineValidators(
+  newPassword2: composeValidators(
     isRequired({message: 'Please confirm the password'}),
     matchesField('newPassword1')({message: 'Passwords do not match'})
   )()
