@@ -45,6 +45,6 @@ const UserDetailedDescription = ({profile}) => {
       </Segment>
     </Grid.Column>
   );
-}
+};
 
 export default UserDetailedDescription;
