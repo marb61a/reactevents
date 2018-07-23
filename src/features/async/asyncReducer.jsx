@@ -9,26 +9,26 @@ const initialState = {
   loading: false
 };
 
-export const asyncActionStarted = (state) => {
+export const asyncActionStarted = (state, payload) => {
   return {
     ...state,
     loading: true
-  }
-}
+  };
+};
 
 export const asyncActionFinished = (state) => {
   return {
     ...state,
     loading: false
-  }
-}
+  };
+};
 
 export const asyncActionError = (state) => {
   return {
     ...state,
     loading: false
-  }
-}
+  };
+};
 
 export default createReducer(initialState, {
   [ASYNC_ACTION_START]: asyncActionStarted,

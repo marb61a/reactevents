@@ -44,4 +44,4 @@ export const configureStore = (preloadedState) => {
   }
 
   return store;
-}
+};

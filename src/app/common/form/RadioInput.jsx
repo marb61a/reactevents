@@ -9,7 +9,7 @@ const RadioInput = ({input, width, type, label}) => {
         <label>{label}</label>
       </div>
     </Form.Field>
-  )
+  );
 };
 
 export default RadioInput;

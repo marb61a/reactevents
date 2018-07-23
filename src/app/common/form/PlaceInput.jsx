@@ -12,7 +12,7 @@ const styles = {
 class PlaceInput extends Component {
   state = {
     scriptLoaded: false
-  }
+  };
 
   handleScriptLoaded = () => this.setState({
     scriptLoaded: true
@@ -22,7 +22,7 @@ class PlaceInput extends Component {
     const {input, width, onSelect, placeholder, options, meta: {touched, error}} = this.props;
 
     return (
-      <Form.Field error={touched && !error} width={width}>
+      <Form.Field error={touched && !!error} width={width}>
         <Script 
           url='https://maps.googleapis.com/maps/api/js?key=-&libraries=places'
           onLoad={this.handleScriptLoaded}
