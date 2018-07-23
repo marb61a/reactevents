@@ -35,6 +35,6 @@ const UserDetailedHeader = ({profile}) => {
         </Segment>
       </Grid.Column>
     );
-}
+};
 
 export default UserDetailedHeader;
