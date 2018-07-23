@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
 import { withFirestore, firebaseConnect, isEmpty } from 'react-redux-firebase';
-import { compose} from 'redux';
+import { compose } from 'redux';
 
 import EventDetailedHeader from './EventDetailedHeader';
 import EventDetailedInfo from './EventDetailedInfo';
@@ -11,6 +12,8 @@ import EventDetailedSidebar from './EventDetailedSidebar';
 import { objectToArray, createDataTree } from '../../../app/common/util/helpers';
 import { goingToEvent, cancelGoingToEvent } from '../../user/userActions';
 import { addEventComment } from '../eventActions';
+import LoadingComponent from '../../../app/layout/LoadingComponent';
+import { openModal } from '../../modals/modalActions';
 
 const mapState = (state, ownProps) => {
   let event = {};
@@ -20,7 +23,9 @@ const mapState = (state, ownProps) => {
   }
 
   return {
+    requesting: state.firestore.status.requesting,
     event,
+    loading: state.async.loading,
     auth: state.firebase.auth,
     eventChat:
       !isEmpty(state.firebase.data.event_chat) &&
@@ -31,13 +36,26 @@ const mapState = (state, ownProps) => {
 const actions = {
   goingToEvent,
   cancelGoingToEvent,
-  addEventComment
+  addEventComment,
+  openModal
 };
 
 class EventDetailedPage extends Component {
+  state = {
+    initialLoading: true
+  };
+
   async componentDidMount(){
     const { firestore, match } = this.props;
+    let event = await firestore.get(`events/${match.params.id}`);
+
+
+
     await firestore.setListener(`events/${match.params.id}`);
+
+    this.setState({
+      initialLoading: false
+    });
   };
 
   async componentWillUnmount() {
@@ -47,12 +65,23 @@ class EventDetailedPage extends Component {
 
   render() {
     const {
-       event, auth, goingToEvent, cancelGoingToEvent, addEventComment, eventChat 
+      match, requesting, openModal, loading, event, auth, goingToEvent, 
+      cancelGoingToEvent, addEventComment, eventChat
     } = this.props;
-    const attendees = event && event.attendees && objectToArray(event.attendees);
+    const attendees = event && event.attendees && objectToArray(event.attendees)
+      .sort(function(a, b) {
+        return a.joinDate - b.joinDate
+      });
+    
     const isHost = event.hostUid === auth.uid;
     const isGoing = attendees && attendees.some(a => a.id === auth.uid);
     const chatTree = !isEmpty(eventChat) && createDataTree(eventChat)
+    const authenticated = auth.isLoaded && !auth.isEmpty;
+    const loadingEvent = requesting[`events/${match.params.id}`]
+
+    if(loadingEvent || this.state.initialLoading){
+      return <LoadingComponent inverted={true}/>
+    };
 
     return (
       <Grid>
@@ -82,5 +111,6 @@ class EventDetailedPage extends Component {
 export default compose(
   withFirestore,
   connect(mapState, actions),
-  firebaseConnect(props => [`event_chat/${props.match.params.id}`])
+  firebaseConnect(props => props.auth.isLoaded && !props.auth.isEmpty && 
+  [`event_chat/${props.match.params.id}`])
 )(EventDetailedPage);
