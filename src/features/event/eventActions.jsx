@@ -149,7 +149,7 @@ export const getEventsForDashboard = lastEvent => {
       console.log(error);
       dispatch(asyncActionError());
     }
-  }
+  };
 };
 
 export const addEventComment = (eventId, values, parentId) => {

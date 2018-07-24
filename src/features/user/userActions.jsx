@@ -222,7 +222,7 @@ export const cancelGoingToEvent = (event) => {
 }
 
 export const getUserEvents = (userUid, activeTab) => {
-  return async(dispatch, getState, { getFirestore }) => {
+  return async(dispatch, getState) => {
     dispatch(asyncActionStart());
     const firestore = firebase.firestore();
     const today = new Date(Date.now());
@@ -264,7 +264,7 @@ export const getUserEvents = (userUid, activeTab) => {
         ).get();
 
         events.push({...evt.data(), id: evt.id});
-      }
+      };
 
       dispatch({type: FETCH_EVENTS, payload: {events}})
       dispatch(asyncActionFinish());
@@ -272,7 +272,7 @@ export const getUserEvents = (userUid, activeTab) => {
       console.log(error);
       dispatch(asyncActionError());
     }
-  }
+  };
 };
 
 export const followUser = userToFollow => {

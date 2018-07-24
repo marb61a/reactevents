@@ -90,6 +90,7 @@ class UserDetailedPage extends Component {
         { photos && photos.length > 0 &&
           <UserDetailedPhotos photos={photos}/>
         }
+        <UserDetailedPhotos photos={photos}/>}
         <UserDetailedEvents 
           changeTab={this.changeTab}
           events={events}

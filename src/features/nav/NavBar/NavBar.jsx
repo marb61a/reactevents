@@ -44,7 +44,6 @@ class NavBar extends Component {
             ReactEvents
           </Menu.Item>
           <Menu.Item as={NavLink} to="/events" name="Events" />
-          <Menu.Item as={NavLink} to="/test" name="Test" />
           {
             authenticated && 
             <Menu.Item as={NavLink} to="/people" name="People" />
@@ -67,8 +66,8 @@ class NavBar extends Component {
                 signOut={this.handleSignOut} 
               /> )
             : ( <SignedOutMenu 
-                signIn={this.handleSignIn} 
                 register={this.handleRegister}
+                signIn={this.handleSignIn} 
               /> )
            }      
         </Container>

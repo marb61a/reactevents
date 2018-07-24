@@ -89,7 +89,7 @@ class EventForm extends Component {
         });
       })
       .then(() => {
-        this.props.change('city', selectedCity)
+        this.props.change('city', selectedCity);
       });
   };
 

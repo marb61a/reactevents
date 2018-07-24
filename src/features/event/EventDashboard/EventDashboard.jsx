@@ -16,7 +16,7 @@ const query = [
   }
 ]
 
-const mapState = (state) => ({
+const mapState = state => ({
   events: state.events,
   loading: state.async.loading,
   activities: state.firestore.ordered.activity
@@ -54,7 +54,7 @@ class EventDashboard extends Component {
     }
   };
 
-  getNextEvents = async() => {
+  getNextEvents = async () => {
     const { events } = this.props;
     let lastEvent = events && events[events.length - 1];
 
