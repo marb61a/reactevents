@@ -13,7 +13,7 @@ const DateInput = (
 ) => {
   if(value){
     value = moment(value, 'X');
-  }
+  };
 
   return (
     <Form.Field error={touched && !!error} width={width}>
@@ -22,8 +22,6 @@ const DateInput = (
         placeholderText={placeholder}
         selected={value ? moment(value) : null}
         onChange={onChange}
-        // Prevents date reset when using redux forms
-        onBlur={() => onBlur()}
         {...restInput}
       />
       {touched && error &&

@@ -5,7 +5,7 @@ import EventListItem from './EventListItem';
 
 class EventList extends Component {
   render() {
-    const {events, getNextEvents, loading, moreEvents } = this.props;
+    const { events, getNextEvents, loading, moreEvents } = this.props;
 
     return (
       <div>
@@ -25,7 +25,7 @@ class EventList extends Component {
         }
       </div>
     );
-  }
-}
+  };
+};
 
 export default EventList;

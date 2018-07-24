@@ -7,6 +7,6 @@ const LoadingComponent = ({inverted}) => {
         <Loader content="Loading..."/>
       </Dimmer>
     );
-}
+};
 
 export default LoadingComponent;
