@@ -35,6 +35,7 @@ export const createEvent = (event) => {
 
 export const updateEvent = event => {
   return async (dispatch, getState) => {
+    dispatch(asyncActionStart());
     const firestore = firebase.firestore();
 
     if(event.date !== getState().firestore.ordered.events[0].date){

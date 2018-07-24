@@ -20,7 +20,7 @@ const mapState = (state, ownProps) => {
 
   if(state.firestore.ordered.events && state.firestore.ordered.events[0]){
     event = state.firestore.ordered.events[0];
-  }
+  };
 
   return {
     requesting: state.firestore.status.requesting,
