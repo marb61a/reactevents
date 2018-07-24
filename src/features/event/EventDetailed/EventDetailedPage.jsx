@@ -114,7 +114,7 @@ class EventDetailedPage extends Component {
       </Grid>
     );
   }
-}
+};
 
 export default compose(
   withFirestore,

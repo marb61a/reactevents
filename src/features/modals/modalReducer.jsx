@@ -8,11 +8,11 @@ export const openModal = (state, payload) => {
   return { 
     modalType, modalProps
   };
-}
+};
 
 export const closeModal = (state, payload) => {
   return null;
-}
+};
 
 export default createReducer(initialState, {
   [MODAL_OPEN]: openModal,
