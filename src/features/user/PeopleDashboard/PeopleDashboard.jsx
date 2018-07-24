@@ -29,24 +29,25 @@ const mapState = state => ({
   auth: state.firebase.auth
 });
 
-const PeopleDashboard = ({following, followers}) => {
+const PeopleDashboard = ({followings, followers}) => {
   return (
     <Grid>
       <Grid.Column width={16}>
         <Segment>
           <Header dividing content="People following me" />
           <Card.Group itemsPerRow={8} stackable>
-            {followers && followers.map(follower => (
+            {followers && followers.map(follower => 
               <PersonCard key={follower.id} user={follower}/>
-            ))}
+            )}
           </Card.Group>
         </Segment>
-        <Header dividing content="People I'm following" />
-        <Segment itemsPerRow={8} stackable>
-          <Card.Group>
-            {followers && followings.map(following => (
+        
+        <Segment>
+          <Header dividing content="People I'm following" />
+          <Card.Group itemsPerRow={8} stackable>
+            {followers && followings.map(following => 
               <PersonCard key={following.id} user={following} />
-            ))}
+            )}
           </Card.Group>
         </Segment>
       </Grid.Column>
@@ -54,4 +55,6 @@ const PeopleDashboard = ({following, followers}) => {
   );
 } 
 
-export default PeopleDashboard;
+export default compose(
+  connect(mapState), firestoreConnect(props => query(props))
+)(PeopleDashboard);

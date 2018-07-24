@@ -3,7 +3,7 @@ import {Modal, Button, Divider} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import {closeModal, openModal} from "features/modals/modalActions";
+import {closeModal, openModal} from "./modalActions";
 
 const actions = {closeModal, openModal};
 

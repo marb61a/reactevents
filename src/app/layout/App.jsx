@@ -53,11 +53,10 @@ class App extends Component {
       <div>
         <AsyncModalManager />
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={AsyncHomePage} />
         </Switch>
         <Route path="/(.+)" render={() => (
           <div>
-            <NavBar />
             <AsyncNavBar />
               <Container className="main">
                 <Switch>
