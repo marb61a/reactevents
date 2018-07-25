@@ -9,8 +9,8 @@ import {
 import { createNewEvent } from '../../app/common/util/helpers';
 import firebase from '../../app/config/firebase.js';
 
-export const createEvent = (event) => {
-  return async ( dispatch, getState, {getFirestore}) => {
+export const createEvent = event => 
+  async ( dispatch, getState, {getFirestore}) => {
     const firestore = getFirestore();
     const user = firestore.auth().currentUser;
     const photoURL = getState().firebase.profile.photoURL;
@@ -30,11 +30,10 @@ export const createEvent = (event) => {
     } catch(error){
       toastr.error('Oops', 'Something went wrong');
     }
-  }
-};
+  };
 
-export const updateEvent = event => {
-  return async (dispatch, getState) => {
+export const updateEvent = event => 
+  async (dispatch, getState) => {
     dispatch(asyncActionStart());
     const firestore = firebase.firestore();
 
@@ -79,11 +78,10 @@ export const updateEvent = event => {
       dispatch(asyncActionError());
       toastr.error('Oops', 'Something went wrong');
     }
-  }
-};
+  };
 
-export const cancelToggle = (cancelled, eventId) => {
-  return async(dispatch, getState, { getFirestore }) => {
+export const cancelToggle = (cancelled, eventId) => 
+  async(dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     const message = cancelled
     ? 'Are you sure you want to cancel the event?'
@@ -99,11 +97,10 @@ export const cancelToggle = (cancelled, eventId) => {
     } catch(error){
       console.log(error);
     }
-  }
-};
+  };
 
-export const getEventsForDashboard = lastEvent => {
-  return async(dispatch, getState) => {
+export const getEventsForDashboard = lastEvent => 
+  async(dispatch, getState) => {
     let today = new Date(Date.now());
     const firestore = firebase.firestore();
     const eventsRef = firestore.collection('events');
@@ -150,10 +147,9 @@ export const getEventsForDashboard = lastEvent => {
       dispatch(asyncActionError());
     }
   };
-};
 
-export const addEventComment = (eventId, values, parentId) => {
-  return async(dispatch, getState, { getFirebase }) => {
+export const addEventComment = (eventId, values, parentId) => 
+  async(dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     const profile = getState().firebase.profile;
     const user = firebase.auth().currentUser;
@@ -173,5 +169,4 @@ export const addEventComment = (eventId, values, parentId) => {
       console.log(error);
       toastr.error('Oops', 'Problem adding comment');
     };
-  }
-};
+  };
