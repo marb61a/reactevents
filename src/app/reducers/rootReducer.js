@@ -11,15 +11,15 @@ import authReducer from '../../features/auth/authReducer';
 import asyncReducer from '../../features/async/asyncReducer';
 
 const rootReducer = combineReducers({
-  form: FormReducer,
+  firebase: firebaseReducer,
+  firestore: firestoreReducer,
   test: testReducer,
   events: eventReducer,
+  form: FormReducer,
   modals: modalReducer,
   auth: authReducer,
   async: asyncReducer,
-  toastr: toastrReducer,
-  firebase: firebaseReducer,
-  firestore: firestoreReducer
+  toastr: toastrReducer
 });
 
 export default rootReducer;
