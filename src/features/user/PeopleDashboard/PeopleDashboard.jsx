@@ -1,8 +1,7 @@
-import React  from 'react';
+import React from 'react';
 import { Grid, Segment, Header, Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-
 import { firestoreConnect } from 'react-redux-firebase';
 import PersonCard from './PersonCard';
 
@@ -36,12 +35,11 @@ const PeopleDashboard = ({followings, followers}) => {
         <Segment>
           <Header dividing content="People following me" />
           <Card.Group itemsPerRow={8} stackable>
-            {followers && followers.map(follower => 
-              <PersonCard key={follower.id} user={follower}/>
-            )}
+          {followers && followers.map(follower => 
+            <PersonCard key={follower.id} user={follower} />
+          )}
           </Card.Group>
         </Segment>
-        
         <Segment>
           <Header dividing content="People I'm following" />
           <Card.Group itemsPerRow={8} stackable>
@@ -53,7 +51,7 @@ const PeopleDashboard = ({followings, followers}) => {
       </Grid.Column>
     </Grid>
   );
-} 
+};
 
 export default compose(
   connect(mapState), firestoreConnect(props => query(props))
