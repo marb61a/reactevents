@@ -12,4 +12,5 @@ App Built using
   - Revalidate
 
 Firebase App URL
-  - 
+  - https://reactevents-32fee.firebaseapp.com
+  
