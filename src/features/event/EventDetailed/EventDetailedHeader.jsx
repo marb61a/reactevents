@@ -45,7 +45,7 @@ const EventDetailedHeader = ({
                 />
                 <p>{format(eventDate, 'dddd Do MMMM')}</p>
                 <p>
-                  Hosted by <strong>{event.hostedBy}</strong>
+                  Hosted by : <strong>{event.hostedBy}</strong>
                 </p>
               </Item.Content>
             </Item>

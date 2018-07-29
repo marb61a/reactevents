@@ -21,9 +21,9 @@ class EventListItem extends Component {
                   {event.title}
                 </Item.Header>
                 <Item.Description>
-                  Hosted by 
+                  Hosted by  
                   <Link to={`/profile/${event.hostUid}`}>
-                    {event.hostedBy}
+                     { event.hostedBy}
                   </Link>
                 </Item.Description>
                 { event.cancelled && 
