@@ -10,6 +10,11 @@ App Built using
   - Firestore
   - Google Maps
   - Revalidate
+  
+
+Users will need to add their own
+  - Google API keys
+  - Also Facebook only allows test users for sites without TOC etc
 
 Firebase App URL
   - https://reactevents-32fee.firebaseapp.com
